@@ -1,5 +1,9 @@
-import Image from "next/image";
+import PdfViewer from "@/features/PdfViewer";
 
 export default function Home() {
-    return <h1 className="text-center">Hello World</h1>;
+    return (
+        <h1 className="text-center">
+            <PdfViewer />
+        </h1>
+    );
 }

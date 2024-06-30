@@ -2,7 +2,6 @@
 
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogFooter,
@@ -21,7 +20,6 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
-import React from "react";
 import { LuLogOut } from "react-icons/lu";
 
 type Props = {
@@ -36,7 +34,7 @@ const LoggedButton = ({ user }: Props) => {
     return (
         <DropdownMenu>
             <AlertDialog>
-                <DropdownMenuTrigger>
+                <DropdownMenuTrigger asChild>
                     <Button variant="outline">
                         <Avatar className="mr-2 size-6">
                             <AvatarFallback>{user.name?.[0]}</AvatarFallback>

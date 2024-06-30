@@ -52,6 +52,12 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("verificationtokens")
 }
+
+enum UserType {
+	admin
+	commercial
+	user
+}
 model User {
   id            String    @id @default(cuid())
   email         String?   @unique
@@ -60,118 +66,10 @@ model User {
   lastname      String?
   emailVerified DateTime?
   image         String?
-  coupleId		String?
-  sponsorId		String?
+  userType		UserType
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
-  responses		Response[]
-  orders		Order[]
-
-  sponsor       User?     @relation("UserSponsor", fields: [sponsorId], references: [id])
-  sponsees      User[]    @relation("UserSponsor")
-}
-
-enum QuizType {
-	uniqueCheckbox
-	multiCheckbox
-	uniqueSelect
-	multiSelect
-	rank
-	text
-	order
-}
-
-model Quiz {
-  id            String    @id @default(cuid())
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  title			String
-  description	String
-
-  quizItems		QuizItem[]
-}
-
-model QuizItem {
-  id            String    @id @default(cuid())
-  title			String
-  description	String
-  type			QuizType
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  quizId		String
-
-  quiz			Quiz		@relation(fields: [quizId], references: [id])
-  responses		Response[]
-}
-
-model Response {
-  id        				String    @id @default(cuid())
-  userId    				String
-  quizItemId				String
-  type						QuizType
-  answerUniqueCheckbox		String?
-  answerMultiCheckbox		String?
-  answerUniqueSelect		String?
-  answerMultiSelect			String?
-  answerRank				String?
-  answerText				String?
-  answerOrder				String?
-  createdAt 				DateTime  @default(now())
-  updatedAt 				DateTime  @updatedAt
-
-  user      	User      @relation(fields: [userId], references: [id])
-  quizItem  	QuizItem  @relation(fields: [quizItemId], references: [id])
-}
-
-enum ProductType {
-  service
-  product
-}
-
-model Product {
-  id          String      @id @default(cuid())
-  name        String
-  description String?
-  price       Float
-  productType ProductType
-  quantity	  Int?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-
-  orders      OrderItem[]
-}
-
-enum OrderStatus {
-  pending
-  paid
-  shipped
-  delivered
-  cancelled
-  refunded
-}
-
-model Order {
-  id         String			@id @default(cuid())
-  userId     String
-  createdAt  DateTime		@default(now())
-  updatedAt  DateTime		@updatedAt
-  status     OrderStatus	@default(pending)
-
-  user       User        @relation(fields: [userId], references: [id])
-  items      OrderItem[]
-}
-
-model OrderItem {
-  id         String      @id @default(cuid())
-  orderId    String
-  productId  String
-  quantity   Int         @default(1)
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-
-  order      Order       @relation(fields: [orderId], references: [id])
-  product    Product     @relation(fields: [productId], references: [id])
 }
