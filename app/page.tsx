@@ -1,9 +1,9 @@
-import PdfViewer from "@/features/PdfViewer";
+import HeroSection from "@/components/layout/home/hereoSection";
 
 export default function Home() {
     return (
         <h1 className="text-center">
-            <PdfViewer />
+            <HeroSection />
         </h1>
     );
 }
