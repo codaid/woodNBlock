@@ -84,9 +84,8 @@ const SignIn = () => {
             <div className="">
                 <Form {...form}>
                     <form
-                        noValidate
                         onSubmit={form.handleSubmit(onSubmit)}
-                        className="grid grid-cols-2 gap-4"
+                        className="gap-4 text-left sm:grid sm:grid-cols-2"
                     >
                         <FormField
                             control={form.control}
@@ -115,6 +114,7 @@ const SignIn = () => {
                                     <FormLabel>Mot de passe</FormLabel>
                                     <FormControl>
                                         <Input
+                                            type="password"
                                             placeholder="Mot de passe"
                                             {...field}
                                         />
@@ -126,7 +126,7 @@ const SignIn = () => {
                         />
                         <Button
                             type="submit"
-                            className="col-span-2"
+                            className="w-full max-sm:mt-5 sm:col-span-2"
                             disabled={isPending}
                         >
                             Se connecter

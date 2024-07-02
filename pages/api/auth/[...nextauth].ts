@@ -7,9 +7,6 @@ import Credentials from "next-auth/providers/credentials";
 
 export const authOptions: AuthOptions = {
     adapter: PrismaAdapter(prisma),
-    theme: {
-        logo: "/next.svg",
-    },
     pages: {
         signIn: "/authentication",
     },

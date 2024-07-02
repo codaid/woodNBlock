@@ -23,8 +23,8 @@ import { z } from "zod";
 const formSchema = z.object({
     username: z.string(),
     lastName: z.string(),
-    firstName: z.string().email(),
-    number: z.number(),
+    firstName: z.string(),
+    number: z.string().regex(/^\d+$/, "Numéro de téléphone invalide"),
     email: z.string().email(),
     password: z.string(),
 });
@@ -37,7 +37,7 @@ const SignUp = () => {
             username: "",
             lastName: "",
             firstName: "",
-            number: 0,
+            number: "",
             email: "",
             password: "",
         },
@@ -72,22 +72,25 @@ const SignUp = () => {
                 return;
             }
             toast.success("Compte créé");
-            router.push("/user/home");
+            router.push("/user");
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    const onSubmit = (values: z.infer<typeof formSchema>) => {
         console.log(values);
         mutate(values);
-    }
+    };
+
+    const onError = (errors: any) => {
+        console.log("error: ", errors);
+    };
     return (
         <div className="mt-5">
             <div className="">
                 <Form {...form}>
                     <form
-                        noValidate
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="grid grid-cols-2 gap-4"
+                        onSubmit={form.handleSubmit(onSubmit, onError)}
+                        className="gap-4 text-left sm:grid sm:grid-cols-2"
                     >
                         <FormField
                             control={form.control}
@@ -116,7 +119,6 @@ const SignUp = () => {
                                     <FormLabel>Prénom</FormLabel>
                                     <FormControl>
                                         <Input
-                                            type="text"
                                             placeholder="Prénom"
                                             {...field}
                                         />
@@ -172,7 +174,6 @@ const SignUp = () => {
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
                                         <Input
-                                            type="email"
                                             placeholder="mail@mail.com"
                                             {...field}
                                         />
@@ -203,7 +204,7 @@ const SignUp = () => {
                         />
                         <Button
                             type="submit"
-                            className="col-span-2"
+                            className="w-full max-sm:mt-5 sm:col-span-2"
                             disabled={isPending}
                         >
                             S&apos;enregistrer

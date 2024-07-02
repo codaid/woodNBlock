@@ -32,14 +32,16 @@ const Authentication = () => {
                     </CardHeader>
                     <CardContent>
                         <Tabs defaultValue="signup">
-                            <TabsList>
-                                <TabsTrigger value="signup">
-                                    S&apos;enregistrer
-                                </TabsTrigger>
-                                <TabsTrigger value="signin">
-                                    Se connecter
-                                </TabsTrigger>
-                            </TabsList>
+                            <div className="flex justify-center">
+                                <TabsList>
+                                    <TabsTrigger value="signup">
+                                        S&apos;enregistrer
+                                    </TabsTrigger>
+                                    <TabsTrigger value="signin">
+                                        Se connecter
+                                    </TabsTrigger>
+                                </TabsList>
+                            </div>
 
                             <TabsContent value="signup">
                                 {" "}
