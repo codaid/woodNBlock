@@ -12,72 +12,69 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Loader from "@/components/ui/loader";
+import { schemaAddUser, t_addUser } from "@/schemaType";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { LuLogIn } from "react-icons/lu";
-import { z } from "zod";
-
-const formSchema = z.object({
-    username: z.string(),
-    lastName: z.string(),
-    firstName: z.string(),
-    number: z.string().regex(/^\d+$/, "Numéro de téléphone invalide"),
-    email: z.string().email(),
-    password: z.string(),
-});
 
 const SignUp = () => {
-    const router = useRouter();
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<t_addUser>({
+        resolver: zodResolver(schemaAddUser),
         defaultValues: {
             username: "",
-            lastName: "",
-            firstName: "",
-            number: "",
+            lastname: "",
+            firstname: "",
+            phone: "",
             email: "",
             password: "",
         },
     });
 
     const { mutate, isPending } = useMutation({
-        mutationFn: async (values: z.infer<typeof formSchema>) => {
+        mutationFn: async (values: t_addUser) => {
             return await fetch("/api/auth/signup", {
                 method: "POST",
                 headers: {
                     "Conten-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    username: values.username,
-                    email: values.email,
-                    password: values.password,
-                }),
+                body: JSON.stringify(values),
             });
         },
         onSuccess: async (res) => {
             if (!res.ok) {
                 if (res.status === 409) {
                     const resJson = await res.json();
-                    console.log(resJson);
-                    toast.error("Pseudo déjà utilisé");
-                    form.setError("username", {
-                        message: "Pseudo déjà utilisé",
-                    });
+                    if (resJson.message.includes("email")) {
+                        toast.error("Email déjà utilisé");
+                        form.setError("email", {
+                            message: "Email déjà utilisé",
+                        });
+                    } else {
+                        toast.error("Pseudo déjà utilisé");
+                        form.setError("username", {
+                            message: "Pseudo déjà utilisé",
+                        });
+                    }
                 } else {
                     toast.error("Une erreur inconnue est survenue");
                 }
                 return;
             }
-            toast.success("Compte créé");
-            router.push("/user");
+            const { user } = await res.json();
+            toast.success("Compte créé. Connection...");
+            await signIn("credentials", {
+                redirect: true,
+                callbackUrl: "/user",
+                email: user.email,
+                password: form.getValues("password"),
+            });
         },
     });
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log(values);
+    const onSubmit = (values: t_addUser) => {
         mutate(values);
     };
 
@@ -94,7 +91,7 @@ const SignUp = () => {
                     >
                         <FormField
                             control={form.control}
-                            name="lastName"
+                            name="lastname"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Nom</FormLabel>
@@ -113,7 +110,7 @@ const SignUp = () => {
 
                         <FormField
                             control={form.control}
-                            name="firstName"
+                            name="firstname"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Prénom</FormLabel>
@@ -149,7 +146,7 @@ const SignUp = () => {
 
                         <FormField
                             control={form.control}
-                            name="number"
+                            name="phone"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Téléphone</FormLabel>

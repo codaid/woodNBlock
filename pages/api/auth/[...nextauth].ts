@@ -53,14 +53,6 @@ export const authOptions: AuthOptions = {
             return token;
         },
     },
-
-    // callbacks: {
-    //     async session({ session, user }) {
-    //         session.user.id = user.id;
-    //         session.user.image = user.image;
-    //         return session;
-    //     },
-    // },
     secret: env.NEXTAUTH_SECRET,
 };
 

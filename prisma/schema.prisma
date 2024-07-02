@@ -68,6 +68,7 @@ model User {
   image         String?
   userType		UserType
   password		String
+  phone		String
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt

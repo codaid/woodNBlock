@@ -1,26 +1,18 @@
 import { prisma } from "@/lib/prisma";
+import { schemaAddUser } from "@/schemaType";
 import { hash } from "bcrypt";
-import { NextResponse } from "next/server";
-import { z } from "zod";
+import { NextRequest, NextResponse } from "next/server";
 
-const SchemaUserSignup = z.object({
-    username: z.string(),
-    lastName: z.string(),
-    firstName: z.string().email(),
-    number: z.number(),
-    email: z.string().email(),
-    password: z.string(),
-});
-
-export const POST = async (req: Request) => {
+export const POST = async (req: NextRequest) => {
     try {
         const body = await req.json();
-        const newUserData = SchemaUserSignup.parse(body);
+        const newUserData = schemaAddUser.parse(body);
 
         const existingEmail = await prisma.user.findUnique({
             where: { email: newUserData.email },
         });
         if (existingEmail) {
+            console.log("email");
             return NextResponse.json(
                 {
                     user: null,
@@ -34,6 +26,7 @@ export const POST = async (req: Request) => {
             where: { username: newUserData.username },
         });
         if (existingUsername) {
+            console.log("pseudo");
             return NextResponse.json(
                 {
                     user: null,
@@ -61,6 +54,9 @@ export const POST = async (req: Request) => {
         );
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: "Something went wrong" });
+        return NextResponse.json(
+            { message: "Something went wrong" },
+            { status: 500 }
+        );
     }
 };
