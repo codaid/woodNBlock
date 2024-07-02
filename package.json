@@ -1,11 +1,11 @@
 {
-    "name": "les_bras_casses",
+    "name": "woodnblock",
     "version": "0.1.0",
     "private": true,
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "start": "next start",
+        "start": "pnpm run prisma:init && next start",
         "lint": "next lint",
         "prisma:generate": "prisma generate",
         "prisma:migrate": "prisma migrate deploy",
