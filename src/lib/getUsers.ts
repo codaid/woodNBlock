@@ -1,20 +1,11 @@
 import { prisma } from "@/lib/prisma";
-
-export interface SelectUser {
-    id: string;
-    username: string;
-    email: string;
-    firstname: string;
-    lastname: string;
-    phone: string;
-    // ajoutez les autres champs nécessaires
-}
+import { schemaSelectUsers, t_userSelect } from "@/schemaType";
 
 export async function getUsers(
     search: string,
     offset: number
 ): Promise<{
-    users: SelectUser[];
+    users: t_userSelect[];
     newOffset: number | null;
 }> {
     if (search) {
@@ -38,7 +29,8 @@ export async function getUsers(
                 phone: true,
             },
         });
-        return { users, newOffset: null };
+        const usersParse = schemaSelectUsers.parse(users);
+        return { users: usersParse, newOffset: null };
     }
 
     if (offset === null) {
@@ -58,6 +50,7 @@ export async function getUsers(
         },
     });
 
+    const usersParse = schemaSelectUsers.parse(moreUsers);
     const newOffset = moreUsers.length >= 20 ? offset + 20 : null;
-    return { users: moreUsers, newOffset };
+    return { users: usersParse, newOffset };
 }

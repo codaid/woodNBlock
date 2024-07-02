@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export type t_addUser = z.infer<typeof schemaAddUser>;
 export type t_userData = z.infer<typeof schemaUserData>;
+export type t_userSelect = z.infer<typeof schemaSelectUser>;
 
 export const schemaUserData = z.object({
     id: z.string(),
@@ -15,6 +16,15 @@ export const schemaUserData = z.object({
     userType: z.enum(["commercial", "user", "admin"]),
 });
 
+export const schemaSelectUser = z.object({
+    id: z.string(),
+    username: z.string(),
+    email: z.string(),
+    firstname: z.string(),
+    lastname: z.string(),
+    phone: z.string().regex(/^\d+$/, "Numéro de téléphone invalide"),
+});
+
 export const schemaAddUser = schemaUserData
     .omit({
         id: true,
@@ -23,9 +33,9 @@ export const schemaAddUser = schemaUserData
         userType: true,
     })
     .extend({
-        password: z
-            .string()
-            .min(6, {
-                message: "Le mot de passe doit contenir 6 caractere minimum",
-            }),
+        password: z.string().min(6, {
+            message: "Le mot de passe doit contenir 6 caractere minimum",
+        }),
     });
+
+export const schemaSelectUsers = z.array(schemaSelectUser);

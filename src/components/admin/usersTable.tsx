@@ -9,14 +9,14 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { SelectUser } from "@/lib/getUsers";
+import { t_userSelect } from "@/schemaType";
 import { useRouter } from "next/navigation";
 
 export function UsersTable({
     users,
     offset,
 }: {
-    users: SelectUser[];
+    users: t_userSelect[];
     offset: number | null;
 }) {
     const router = useRouter();
@@ -63,7 +63,7 @@ export function UsersTable({
     );
 }
 
-function UserRow({ user }: { user: SelectUser }) {
+function UserRow({ user }: { user: t_userSelect }) {
     const userId = user.id;
     const deleteUserWithId = () => console.log("deleted");
 

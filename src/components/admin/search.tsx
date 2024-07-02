@@ -24,11 +24,9 @@ export function Search(props: { value?: string }) {
         }
 
         startTransition(() => {
-            // All navigations are transitions automatically
-            // But wrapping this allow us to observe the pending state
             router.replace(`${pathname}?${params.toString()}`);
         });
-    }, [router, value]);
+    }, [pathname, router, searchParams, value]);
 
     return (
         <div className="relative">
@@ -40,7 +38,7 @@ export function Search(props: { value?: string }) {
                     setValue(e.currentTarget.value);
                 }}
                 spellCheck={false}
-                className="w-full appearance-none bg-white text-slate-900 pl-8 shadow-none"
+                className="w-full appearance-none bg-white pl-8 text-slate-900 shadow-none"
                 placeholder="Search users..."
             />
             {isPending && (

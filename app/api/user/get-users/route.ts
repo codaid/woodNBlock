@@ -1,18 +1,21 @@
 // pages/api/admin/get-users.ts
 import { getUsers } from "@/lib/getUsers";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { search = "", offset = "0" } = req.query;
+export const POST = async (req: NextRequest, res: NextResponse) => {
+    const { search = "", offset = "0" } = await req.json();
 
     try {
         const { users, newOffset } = await getUsers(
             search as string,
             parseInt(offset as string, 10)
         );
-        return res.status(200).json({ users, newOffset });
+        return NextResponse.json({ users, newOffset }, { status: 200 });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Erreur serveur" });
+        console.log(error);
+        return NextResponse.json(
+            { message: "Something went wrong" },
+            { status: 500 }
+        );
     }
 };
