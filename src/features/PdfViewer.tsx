@@ -1,16 +1,13 @@
 "use client";
 
 import { Card, CardHeader } from "@/components/ui/card";
+import ShowError from "@/components/ui/error";
 import Loader from "@/components/ui/loader";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 
-// Spécifiez l'URL du worker
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    "pdfjs-dist/build/pdf.worker.min.mjs",
-    import.meta.url
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 type Props = {
     pdfName: string;
@@ -20,7 +17,7 @@ const PdfViewer = ({ pdfName }: Props) => {
     const [file, setFile] = useState<string | null>(null);
     const [numPages, setNumPages] = useState<number | null>(null);
 
-    const {} = useQuery({
+    const { isLoading, isError, error } = useQuery({
         queryKey: ["catalog", pdfName],
         queryFn: async () => {
             await fetch("/api/get-pdf", {
@@ -40,6 +37,10 @@ const PdfViewer = ({ pdfName }: Props) => {
                 });
         },
     });
+
+    if (isLoading) return <Loader />;
+
+    if (isError) return <ShowError errorMessage={error.message} />;
 
     const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
         setNumPages(numPages);

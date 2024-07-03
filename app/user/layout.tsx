@@ -1,7 +1,8 @@
 import Authentication from "@/components/layout/home/authentication";
 import { getAuthSession } from "@/lib/auth";
+import { PropsWithChildren } from "react";
 
-const Layout = async () => {
+const Layout = async ({ children }: PropsWithChildren) => {
     const session = await getAuthSession();
 
     if (!session?.user)
@@ -11,12 +12,7 @@ const Layout = async () => {
             </div>
         );
 
-    return (
-        <div>
-            <h1>Connected</h1>
-            <p>{session.user.name}</p>
-        </div>
-    );
+    return children;
 };
 
 export default Layout;
