@@ -3,12 +3,6 @@ import { promises as fs } from "fs";
 import { NextRequest, NextResponse } from "next/server";
 import { join } from "path";
 
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-};
-
 // const uploadDir = path.join(process.cwd(), "public/uploads");
 
 // if (!fs.existsSync(uploadDir)) {
