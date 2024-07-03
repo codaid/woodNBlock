@@ -75,3 +75,11 @@ model User {
   accounts      Account[]
   sessions      Session[]
 }
+
+model Catalog {
+  id            String    @id @default(cuid())
+  name	        String   @unique
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}

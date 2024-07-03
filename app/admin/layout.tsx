@@ -5,7 +5,7 @@ import AuthButton from "@/features/AuthButton";
 import { getAuthSession } from "@/lib/auth";
 import Link from "next/link";
 import { PropsWithChildren } from "react";
-import { LuSettings2, LuUsers2 } from "react-icons/lu";
+import { LuBookOpen, LuSettings2, LuUsers2 } from "react-icons/lu";
 
 const LayoutAdmin = async ({ children }: PropsWithChildren) => {
     const session = await getAuthSession();
@@ -32,11 +32,15 @@ const LayoutAdmin = async ({ children }: PropsWithChildren) => {
                     </div>
                     <div className="flex-1 overflow-auto py-2">
                         <nav className="grid items-start px-4 text-sm font-medium">
-                            <NavItem href="/">
+                            <NavItem href="/admin">
                                 <LuUsers2 className="size-4" />
                                 Users
                             </NavItem>
-                            <NavItem href="/settings">
+                            <NavItem href="/admin/catalog">
+                                <LuBookOpen className="size-4" />
+                                Catalogue
+                            </NavItem>
+                            <NavItem href="/admin/settings">
                                 <LuSettings2 className="size-4" />
                                 Settings
                             </NavItem>
