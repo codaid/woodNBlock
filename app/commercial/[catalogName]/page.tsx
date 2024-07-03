@@ -1,3 +1,4 @@
+import { removePdfExtension } from "@/components/utils/fileExtension";
 import PdfViewer from "@/features/PdfViewer";
 
 type Props = {
@@ -9,7 +10,7 @@ type Props = {
 const ViewCatalogPage = ({ params }: Props) => {
     return (
         <div>
-            <PdfViewer pdfName={params.catalogName} />
+            <PdfViewer pdfName={removePdfExtension(params.catalogName)} />
         </div>
     );
 };

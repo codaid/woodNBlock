@@ -1,3 +1,4 @@
+import { removePdfExtension } from "@/components/utils/fileExtension";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -24,9 +25,9 @@ export const HoverEffect = ({
         >
             {items.map((item, idx) => (
                 <Link
-                    href={item?.title}
+                    href={`/commercial/${removePdfExtension(item?.title)}`}
                     key={item?.id}
-                    className="group relative  block size-full p-2"
+                    className="group relative block size-full p-2"
                     onMouseEnter={() => setHoveredIndex(idx)}
                     onMouseLeave={() => setHoveredIndex(null)}
                 >

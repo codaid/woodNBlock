@@ -27,6 +27,7 @@ export async function getUsers(
                 firstname: true,
                 lastname: true,
                 phone: true,
+                userType: true,
             },
         });
         const usersParse = schemaSelectUsers.parse(users);
@@ -47,6 +48,7 @@ export async function getUsers(
             firstname: true,
             lastname: true,
             phone: true,
+            userType: true,
         },
     });
 

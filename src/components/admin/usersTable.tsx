@@ -9,8 +9,12 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { t_userSelect } from "@/schemaType";
+import { t_userSelect, t_userUpdate } from "@/schemaType";
+import { updateUser } from "@/services/userServices";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { LuTrash2 } from "react-icons/lu";
+import Loader from "../ui/loader";
 
 export function UsersTable({
     users,
@@ -40,6 +44,8 @@ export function UsersTable({
                             <TableHead className="hidden md:table-cell">
                                 Username
                             </TableHead>
+                            <TableHead>Type</TableHead>
+                            <TableHead></TableHead>
                             <TableHead></TableHead>
                         </TableRow>
                     </TableHeader>
@@ -66,24 +72,54 @@ export function UsersTable({
 function UserRow({ user }: { user: t_userSelect }) {
     const userId = user.id;
     const deleteUserWithId = () => console.log("deleted");
+    const { mutate, isPending } = useMutation({
+        mutationFn: async (dataUpdate: t_userUpdate) =>
+            await updateUser(dataUpdate),
+    });
 
     return (
         <TableRow>
             <TableCell className="font-medium">
-                {user.firstname}
-                {user.lastname}
+                <span>
+                    {user.firstname} {user.lastname}
+                </span>
+                <br />
+                <span>{user.phone}</span>
             </TableCell>
             <TableCell className="hidden md:table-cell">{user.email}</TableCell>
             <TableCell>{user.username}</TableCell>
+            <TableCell>{user.userType}</TableCell>
             <TableCell>
                 <Button
                     className="w-full"
                     size="sm"
                     variant="outline"
-                    formAction={deleteUserWithId}
-                    disabled
+                    formAction={() => mutate({ id: userId, userType: "user" })}
                 >
-                    Delete
+                    Utilisateur
+                    {isPending && <Loader className="ml-2" />}
+                </Button>
+                <Button
+                    className="w-full"
+                    size="sm"
+                    variant="outline"
+                    formAction={() =>
+                        mutate({ id: userId, userType: "commercial" })
+                    }
+                >
+                    Commercial
+                    {isPending && <Loader className="ml-2" />}
+                </Button>
+                <Button
+                    className="mt-2 w-full"
+                    size="icon"
+                    variant="destructive"
+                    formAction={() =>
+                        mutate({ id: userId, userType: "commercial" })
+                    }
+                >
+                    <LuTrash2 />
+                    {isPending && <Loader className="ml-2" />}
                 </Button>
             </TableCell>
         </TableRow>

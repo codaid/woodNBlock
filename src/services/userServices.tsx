@@ -1,4 +1,4 @@
-import { schemaUserData, t_userData } from "@/schemaType";
+import { schemaUserData, t_userData, t_userUpdate } from "@/schemaType";
 
 export const getUserData = async (
     userId: string
@@ -29,5 +29,45 @@ export const getUserData = async (
     } catch (error) {
         console.log(error);
         return null;
+    }
+};
+
+export const updateUser = async (
+    dataUpdate: t_userUpdate
+): Promise<boolean> => {
+    try {
+        const response = await fetch("/api/user", {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(dataUpdate),
+        });
+        if (!response.ok) {
+            switch (response.status) {
+                case 401:
+                    throw new Error(
+                        "Vous n'êtes pas identifié. Veuillez vous deconnecter et réessayer"
+                    );
+
+                case 403:
+                    throw new Error(
+                        "Vous n'êtes pas autorisé à effectuer cette action."
+                    );
+
+                case 404:
+                    throw new Error(
+                        "Votre `id` ou votre compte utilisateur est introuvable. Veuillez vous deconnecter et réessayer"
+                    );
+
+                default:
+                    throw new Error(
+                        "Une erreur inconnu s'est produite. Veuillez réessayer. Contacter le support si le probleme persiste."
+                    );
+            }
+        }
+        return true;
+    } catch (error) {
+        throw new Error("Une erreur est survenue");
     }
 };

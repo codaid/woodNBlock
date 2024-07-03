@@ -4,6 +4,7 @@ export type t_addUser = z.infer<typeof schemaAddUser>;
 export type t_userData = z.infer<typeof schemaUserData>;
 export type t_userSelect = z.infer<typeof schemaSelectUser>;
 export type t_catalog = z.infer<typeof schemaCatalog>;
+export type t_userUpdate = z.infer<typeof schemaUserUpdate>;
 
 export const schemaUserData = z.object({
     id: z.string(),
@@ -23,6 +24,7 @@ export const schemaSelectUser = z.object({
     email: z.string(),
     firstname: z.string(),
     lastname: z.string(),
+    userType: z.enum(["commercial", "user", "admin"]),
     phone: z.string().regex(/^\d+$/, "Numéro de téléphone invalide"),
 });
 
@@ -44,6 +46,11 @@ export const schemaCatalog = z.object({
     title: z.string(),
     createdAt: z.string(),
     updatedAt: z.string(),
+});
+
+export const schemaUserUpdate = z.object({
+    id: z.string(),
+    userType: z.enum(["commercial", "user", "admin"]),
 });
 
 export const schemaSelectUsers = z.array(schemaSelectUser);

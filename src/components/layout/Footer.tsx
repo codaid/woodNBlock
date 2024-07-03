@@ -1,5 +1,4 @@
 import { SiteConfig } from "@/lib/site-config";
-import Image from "next/image";
 import Link from "next/link";
 
 export const Footer = () => {
@@ -8,12 +7,12 @@ export const Footer = () => {
             <div className="m-auto w-full max-w-3xl px-2 py-4">
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
                     <div className="flex flex-row items-center gap-2">
-                        <Image
+                        {/* <Image
                             src="/images/logo.jpg"
                             width={40}
                             height={30}
                             alt="app logo"
-                        />
+                        /> */}
                         <Link href="/">{SiteConfig.title}</Link>
                     </div>
                     <div className="flex flex-col items-end gap-2 text-sm text-muted-foreground">
@@ -23,17 +22,11 @@ export const Footer = () => {
                         <Link className="hover:underline" href="/legal/cgv">
                             CGV
                         </Link>
-                        <Link className="hover:underline" href="/courses">
-                            Courses
-                        </Link>
-                        <Link className="hover:underline" href="/admin">
-                            Admin
-                        </Link>
                     </div>
                 </div>
                 <div className="flex w-full items-center justify-center">
                     <p className="text-xs text-muted-foreground">
-                        &copy; {new Date().getFullYear()} Les_Bras_Cassés
+                        &copy; {new Date().getFullYear()} Wood&apos;N Block
                     </p>
                 </div>
             </div>

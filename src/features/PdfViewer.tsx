@@ -7,34 +7,37 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 type Props = {
     pdfName: string;
 };
 
 const PdfViewer = ({ pdfName }: Props) => {
-    const [file, setFile] = useState<string | null>(null);
     const [numPages, setNumPages] = useState<number | null>(null);
 
-    const { isLoading, isError, error } = useQuery({
+    const {
+        data: file,
+        isLoading,
+        isError,
+        error,
+    } = useQuery({
         queryKey: ["catalog", pdfName],
         queryFn: async () => {
-            await fetch("/api/get-pdf", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ pdfName }),
-            })
-                .then((response) => response.blob())
-                .then((blob) => {
-                    const url = URL.createObjectURL(blob);
-                    setFile(url);
-                })
-                .catch((error) => {
-                    console.error("Error fetching the PDF:", error);
+            try {
+                const res = await fetch("/api/get-pdf", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ title: pdfName }),
                 });
+                const blob = await res.blob();
+                const url = URL.createObjectURL(blob);
+                return url;
+            } catch (error) {
+                console.error("Error fetching the PDF:", error);
+            }
         },
     });
 
@@ -47,7 +50,12 @@ const PdfViewer = ({ pdfName }: Props) => {
     };
 
     return (
-        <div>
+        <div className="mx-auto max-w-xl">
+            <div className="mx-auto my-12 max-w-2xl text-center">
+                <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+                    {pdfName.replace("_", " ")}
+                </h1>
+            </div>
             {file ? (
                 <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
                     {Array.from(new Array(numPages), (el, index) => (

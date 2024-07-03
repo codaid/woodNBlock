@@ -18,3 +18,22 @@ export const getCatalogs = async (): Promise<t_catalog[]> => {
         return [];
     }
 };
+
+export const deleteQuiz = async (catalogId: string): Promise<boolean> => {
+    try {
+        const resp = await fetch("/api/quiz", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ catalogId }),
+        });
+
+        if (!resp.ok) return false;
+
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+};

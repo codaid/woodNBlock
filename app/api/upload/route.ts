@@ -133,3 +133,47 @@ export const GET = async (req: NextRequest) => {
         );
     }
 };
+
+export async function DELETE(req: NextRequest) {
+    try {
+        const token = await getToken({ req, secret });
+        if (!token) {
+            return NextResponse.json(
+                { message: "Not authenticated" },
+                { status: 401 }
+            );
+        }
+
+        const uid = token.sub;
+        const user = await prisma.user.findUnique({
+            where: { id: uid },
+        });
+        if (user?.userType !== "admin") {
+            return NextResponse.json(
+                { message: "Not allowed" },
+                { status: 403 }
+            );
+        }
+
+        const body = await req.json();
+        const { catalogId } = body;
+
+        if (!catalogId)
+            return NextResponse.json(
+                { message: "Missing quizId" },
+                { status: 404 }
+            );
+
+        await prisma.catalog.delete({
+            where: { id: catalogId },
+        });
+
+        return NextResponse.json({ message: "Delete successfully" });
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json(
+            { message: "Internal server error" },
+            { status: 500 }
+        );
+    }
+}

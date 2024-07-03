@@ -16,7 +16,7 @@ const schemaPdfName = z.object({
 export const POST = async (req: NextRequest) => {
     try {
         const body = await req.json();
-        const { title: pdfName } = schemaPdfName.parse(body);
+        const { title } = schemaPdfName.parse(body);
 
         const token = await getToken({ req, secret });
         if (!token) {
@@ -49,7 +49,7 @@ export const POST = async (req: NextRequest) => {
                 { status: 403 }
             );
 
-        const filePath = join(pdfpath, pdfName);
+        const filePath = join(pdfpath, title + ".pdf");
         const stat = fs.statSync(filePath);
 
         const fileBuffer = fs.readFileSync(filePath);
