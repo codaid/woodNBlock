@@ -23,14 +23,15 @@ export const POST = async (req: NextRequest) => {
 
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
+        const fileName = file.name.replace(" ", "_");
 
-        const filePath = join("/", "tmp", file.name);
+        const filePath = join("/", "tmp/files", fileName);
         await fs.writeFile(filePath, buffer);
         console.log("filePath : ", filePath);
 
         const pdf = await prisma.catalog.create({
             data: {
-                name: file.name,
+                name: fileName,
             },
         });
 

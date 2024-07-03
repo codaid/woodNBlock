@@ -16,8 +16,10 @@ import {
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import Loader from "@/components/ui/loader";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { LuSend } from "react-icons/lu";
 
 const schema = z.object({
     catalog: z
@@ -39,7 +41,7 @@ const UploadCatalog = () => {
         },
     });
 
-    const mutation = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationFn: async (data: FormData) => {
             const response = await fetch("/api/upload", {
                 method: "POST",
@@ -65,7 +67,7 @@ const UploadCatalog = () => {
         const formData = new FormData();
         formData.append("file", input.catalog);
 
-        mutation.mutate(formData);
+        mutate(formData);
     };
 
     return (
@@ -110,9 +112,14 @@ const UploadCatalog = () => {
                         <Button
                             type="submit"
                             className="w-fit"
-                            disabled={mutation.isPending}
+                            disabled={isPending}
                         >
                             Envoyer
+                            {isPending ? (
+                                <Loader className="ml-2" />
+                            ) : (
+                                <LuSend className="ml-2" />
+                            )}
                         </Button>
                     </form>
                 </Form>
