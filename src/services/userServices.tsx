@@ -24,7 +24,6 @@ export const getUserData = async (
             );
         }
         const data = await response.json();
-        console.log(data);
         const dataParse = schemaUserData.parse(data.userData);
         return dataParse;
     } catch (error) {

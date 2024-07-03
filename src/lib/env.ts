@@ -6,6 +6,7 @@ export const env = createEnv({
         DATABASE_URL: z.string().url(),
         NEXTAUTH_URL: z.string(),
         NEXTAUTH_SECRET: z.string(),
+        PDF_PATH: z.string(),
     },
     client: {
         // NEXT_PUBLIC_PUBLISHABLE_KEY: z.string().min(1),

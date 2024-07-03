@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Card, CardHeader } from "@/components/ui/card";
+import Loader from "@/components/ui/loader";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 
 // Spécifiez l'URL du worker
@@ -9,22 +12,34 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     import.meta.url
 ).toString();
 
-const PdfViewer = () => {
+type Props = {
+    pdfName: string;
+};
+
+const PdfViewer = ({ pdfName }: Props) => {
     const [file, setFile] = useState<string | null>(null);
     const [numPages, setNumPages] = useState<number | null>(null);
 
-    useEffect(() => {
-        // Récupérer le PDF depuis l'API
-        fetch("/api/get-pdf")
-            .then((response) => response.blob())
-            .then((blob) => {
-                const url = URL.createObjectURL(blob);
-                setFile(url);
+    const {} = useQuery({
+        queryKey: ["catalog", pdfName],
+        queryFn: async () => {
+            await fetch("/api/get-pdf", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ pdfName }),
             })
-            .catch((error) => {
-                console.error("Error fetching the PDF:", error);
-            });
-    }, []);
+                .then((response) => response.blob())
+                .then((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    setFile(url);
+                })
+                .catch((error) => {
+                    console.error("Error fetching the PDF:", error);
+                });
+        },
+    });
 
     const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
         setNumPages(numPages);
@@ -44,7 +59,12 @@ const PdfViewer = () => {
                     ))}
                 </Document>
             ) : (
-                <p>Loading PDF...</p>
+                <Card>
+                    <CardHeader>
+                        <p className="mr-2">Chargement du catalogue</p>
+                        <Loader />
+                    </CardHeader>
+                </Card>
             )}
         </div>
     );

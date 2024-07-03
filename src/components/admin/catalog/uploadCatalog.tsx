@@ -49,17 +49,47 @@ const UploadCatalog = () => {
             });
 
             if (!response.ok) {
-                throw new Error("Erreur lors de l'upload");
+                switch (response.status) {
+                    case 400:
+                        throw new Error(
+                            "Le fichier est manquant. Veuillez ajouter de nouveau le fichier"
+                        );
+
+                    case 401:
+                        throw new Error(
+                            "Vous n'êtes pas identifié. Veuillez vous deconnecter et réessayer"
+                        );
+
+                    case 403:
+                        throw new Error(
+                            "Vous n'êtes pas autorisé à effectuer cette action."
+                        );
+
+                    case 404:
+                        throw new Error(
+                            "Votre `id` ou votre compte utilisateur est introuvable. Veuillez vous deconnecter et réessayer"
+                        );
+
+                    case 409:
+                        throw new Error(
+                            "Le titre de ce catalogue existe déjà. Modifiez le titre de votre fichier."
+                        );
+
+                    default:
+                        throw new Error(
+                            "Erreur lors de l'upload. Veuillez réessayer. Contacter le support si le probleme persiste."
+                        );
+                }
             }
 
             return response.json();
         },
         onSuccess: () => {
-            toast.success("Catalogue uploadé avec succès");
+            toast.success("Catalogue ajouté avec succès");
             form.reset();
         },
-        onError: () => {
-            toast.error("Erreur lors de l'upload du catalogue");
+        onError: (error: Error) => {
+            toast.error(error.message);
         },
     });
 

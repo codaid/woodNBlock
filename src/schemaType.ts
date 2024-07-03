@@ -3,6 +3,7 @@ import { z } from "zod";
 export type t_addUser = z.infer<typeof schemaAddUser>;
 export type t_userData = z.infer<typeof schemaUserData>;
 export type t_userSelect = z.infer<typeof schemaSelectUser>;
+export type t_catalog = z.infer<typeof schemaCatalog>;
 
 export const schemaUserData = z.object({
     id: z.string(),
@@ -38,4 +39,12 @@ export const schemaAddUser = schemaUserData
         }),
     });
 
+export const schemaCatalog = z.object({
+    id: z.string(),
+    title: z.string(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+});
+
 export const schemaSelectUsers = z.array(schemaSelectUser);
+export const schemaCatalogs = z.array(schemaCatalog);
