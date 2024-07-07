@@ -1,12 +1,10 @@
+import { authorizeCheck } from "@/lib/auth";
 import { env } from "@/lib/env";
-import { prisma } from "@/lib/prisma";
 import fs from "fs";
-import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { join } from "path";
 import { z } from "zod";
 
-const secret = env.NEXTAUTH_SECRET;
 const pdfpath = env.PDF_PATH;
 
 const schemaPdfName = z.object({
@@ -15,39 +13,13 @@ const schemaPdfName = z.object({
 
 export const POST = async (req: NextRequest) => {
     try {
+        const authorized = await authorizeCheck(req, ["commercial", "admin"]);
+        if (authorized instanceof NextResponse) {
+            return authorized;
+        }
+
         const body = await req.json();
         const { title } = schemaPdfName.parse(body);
-
-        const token = await getToken({ req, secret });
-        if (!token) {
-            return NextResponse.json(
-                { message: "Not authenticated" },
-                { status: 401 }
-            );
-        }
-        const userId = token.sub;
-
-        if (!userId)
-            return NextResponse.json(
-                { message: "UserId missing" },
-                { status: 404 }
-            );
-
-        const user = await prisma.user.findUnique({
-            where: { id: userId },
-        });
-
-        if (!user)
-            return NextResponse.json(
-                { message: "User not found" },
-                { status: 404 }
-            );
-
-        if (user.userType !== "commercial" && user.userType !== "admin")
-            return NextResponse.json(
-                { message: "Not authorize" },
-                { status: 403 }
-            );
 
         const filePath = join(pdfpath, title + ".pdf");
         const stat = fs.statSync(filePath);

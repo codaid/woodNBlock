@@ -1,3 +1,4 @@
+import { authorizeCheck } from "@/lib/auth";
 import { env } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
 import { schemaUserUpdate } from "@/schemaType";
@@ -13,27 +14,32 @@ const secret = env.NEXTAUTH_SECRET;
  */
 export const PATCH = async (req: NextRequest) => {
     try {
+        const authorized = await authorizeCheck(req, ["admin"]);
+        if (authorized instanceof NextResponse) {
+            return authorized;
+        }
+
         const body = await req.json();
         const { id, userType } = schemaUserUpdate.parse(body);
 
-        const token = await getToken({ req, secret });
-        if (!token) {
-            return NextResponse.json(
-                { message: "Not authenticated" },
-                { status: 401 }
-            );
-        }
-        const userId = token.sub;
-        // Get current user to check who try this
-        const currentUser = await prisma.user.findUnique({
-            where: { id: userId },
-        });
+        // const token = await getToken({ req, secret });
+        // if (!token) {
+        //     return NextResponse.json(
+        //         { message: "Not authenticated" },
+        //         { status: 401 }
+        //     );
+        // }
+        // const userId = token.sub;
+        // // Get current user to check who try this
+        // const currentUser = await prisma.user.findUnique({
+        //     where: { id: userId },
+        // });
 
-        if (!currentUser || currentUser.userType !== "admin")
-            return NextResponse.json(
-                { message: "Not authorize" },
-                { status: 403 }
-            );
+        // if (!currentUser || currentUser.userType !== "admin")
+        //     return NextResponse.json(
+        //         { message: "Not authorize" },
+        //         { status: 403 }
+        //     );
 
         const existingUser = await prisma.user.findUnique({
             where: { id },

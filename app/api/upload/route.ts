@@ -1,45 +1,19 @@
+import { authorizeCheck } from "@/lib/auth";
 import { env } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
 import { promises as fs } from "fs";
-import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { join } from "path";
 
-const secret = env.NEXTAUTH_SECRET;
 const pdfpath = env.PDF_PATH;
 
 export const POST = async (req: NextRequest) => {
     try {
-        const token = await getToken({ req, secret });
-        if (!token) {
-            return NextResponse.json(
-                { message: "Not authenticated" },
-                { status: 401 }
-            );
+        const authorized = await authorizeCheck(req, ["admin"]);
+        if (authorized instanceof NextResponse) {
+            return authorized;
         }
-        const userId = token.sub;
 
-        if (!userId)
-            return NextResponse.json(
-                { message: "UserId missing" },
-                { status: 404 }
-            );
-
-        const user = await prisma.user.findUnique({
-            where: { id: userId },
-        });
-
-        if (!user)
-            return NextResponse.json(
-                { message: "User not found" },
-                { status: 404 }
-            );
-
-        if (user.userType !== "admin")
-            return NextResponse.json(
-                { message: "Not authorize" },
-                { status: 403 }
-            );
         const data = await req.formData();
         const file: File | null = data.get("file") as unknown as File;
 
@@ -89,39 +63,11 @@ export const POST = async (req: NextRequest) => {
 
 export const GET = async (req: NextRequest) => {
     try {
-        const token = await getToken({ req, secret });
-        if (!token) {
-            return NextResponse.json(
-                { message: "Not authenticated" },
-                { status: 401 }
-            );
+        const authorized = await authorizeCheck(req, ["commercial", "admin"]);
+        if (authorized instanceof NextResponse) {
+            return authorized;
         }
-        const userId = token.sub;
 
-        if (!userId)
-            return NextResponse.json(
-                { message: "UserId missing" },
-                { status: 404 }
-            );
-
-        const user = await prisma.user.findUnique({
-            where: { id: userId },
-        });
-
-        if (!user)
-            return NextResponse.json(
-                { message: "User not found" },
-                { status: 404 }
-            );
-
-        if (user.userType !== "commercial" && user.userType !== "admin")
-            return NextResponse.json(
-                { message: "Not authorize" },
-                { status: 403 }
-            );
-
-        // const files = await fs.readdir(pdfpath);
-        // const pdfFiles = files.filter((file) => file.endsWith(".pdf"));
         const pdfFiles = await prisma.catalog.findMany();
 
         return NextResponse.json({ files: pdfFiles }, { status: 200 });
@@ -136,23 +82,9 @@ export const GET = async (req: NextRequest) => {
 
 export async function DELETE(req: NextRequest) {
     try {
-        const token = await getToken({ req, secret });
-        if (!token) {
-            return NextResponse.json(
-                { message: "Not authenticated" },
-                { status: 401 }
-            );
-        }
-
-        const uid = token.sub;
-        const user = await prisma.user.findUnique({
-            where: { id: uid },
-        });
-        if (user?.userType !== "admin") {
-            return NextResponse.json(
-                { message: "Not allowed" },
-                { status: 403 }
-            );
+        const authorized = await authorizeCheck(req, ["admin"]);
+        if (authorized instanceof NextResponse) {
+            return authorized;
         }
 
         const body = await req.json();

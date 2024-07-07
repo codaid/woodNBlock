@@ -26,6 +26,12 @@ const Menu = () => {
 
     return (
         <div className="flex gap-5">
+            {userData?.userType === "user" && (
+                <>
+                    <Link href={"/"}>Accueil</Link>
+                    <Link href={"/user"}>Espace utilisateur</Link>
+                </>
+            )}
             {userData?.userType === "commercial" && (
                 <Link href={"/commercial"}>Espace commercial</Link>
             )}

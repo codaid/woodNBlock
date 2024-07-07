@@ -28,6 +28,10 @@ const schema = z.object({
         })
         .refine((file) => file.type === "application/pdf", {
             message: "Le fichier doit être au format PDF",
+        })
+        .refine((file) => /^[a-zA-Z0-9 ]+$/.test(file.name), {
+            message:
+                "Le nom du fichier ne doit contenir que des lettres, des chiffres et des espaces",
         }),
 });
 
