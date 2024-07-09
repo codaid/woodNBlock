@@ -96,6 +96,19 @@ export async function DELETE(req: NextRequest) {
                 { status: 404 }
             );
 
+        const catalog = await prisma.catalog.findUnique({
+            where: { id: catalogId },
+        });
+
+        if (!catalog)
+            return NextResponse.json(
+                { message: "Catalog not found" },
+                { status: 404 }
+            );
+
+        const filePath = join(pdfpath, catalog.title);
+        await fs.unlink(filePath);
+
         await prisma.catalog.delete({
             where: { id: catalogId },
         });

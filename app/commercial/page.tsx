@@ -19,14 +19,14 @@ const CommercialPage = () => {
                         {/* Title */}
                         <div className="mt-5 max-w-2xl">
                             <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-                                Espace commerciale
+                                Espace commercial
                             </h1>
                         </div>
                         {/* End Title */}
                         <div className="mt-5 max-w-3xl">
                             <p className="text-xl text-muted-foreground">
                                 Ici, vous retrouverez tous les catalogues
-                                disponible.
+                                disponibles.
                             </p>
                         </div>
                     </div>
