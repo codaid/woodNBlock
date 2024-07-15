@@ -92,7 +92,7 @@ export async function DELETE(req: NextRequest) {
 
         if (!catalogId)
             return NextResponse.json(
-                { message: "Missing quizId" },
+                { message: "Missing catalogId" },
                 { status: 404 }
             );
 

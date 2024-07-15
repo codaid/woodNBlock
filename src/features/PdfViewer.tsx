@@ -49,8 +49,12 @@ const PdfViewer = ({ pdfName }: Props) => {
         setNumPages(numPages);
     };
 
+    const handleContextMenu = (e: React.MouseEvent) => {
+        e.preventDefault();
+    };
+
     return (
-        <div className="mx-auto max-w-xl">
+        <div className="mx-auto max-w-xl" onContextMenu={handleContextMenu}>
             <div className="mx-auto my-12 max-w-2xl text-center">
                 <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
                     {pdfName.replace("_", " ")}

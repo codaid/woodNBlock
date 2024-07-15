@@ -2,7 +2,7 @@ import { schemaCatalogs, t_catalog } from "@/schemaType";
 
 export const getCatalogs = async (): Promise<t_catalog[]> => {
     try {
-        const response = await fetch("/api/upload", {
+        const response = await fetch("/api/catalog", {
             method: "GET",
         });
 
@@ -19,9 +19,9 @@ export const getCatalogs = async (): Promise<t_catalog[]> => {
     }
 };
 
-export const deleteQuiz = async (catalogId: string): Promise<boolean> => {
+export const deleteCatalog = async (catalogId: string): Promise<boolean> => {
     try {
-        const resp = await fetch("/api/quiz", {
+        const resp = await fetch("/api/catalog", {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
