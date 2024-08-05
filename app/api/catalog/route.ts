@@ -28,9 +28,6 @@ export const POST = async (req: NextRequest) => {
         const buffer = Buffer.from(bytes);
         const fileName = file.name.replace(" ", "_");
 
-        const filePath = join(pdfpath, fileName);
-        await fs.writeFile(filePath, buffer);
-
         const fileExists = await prisma.catalog.findUnique({
             where: { title: fileName },
         });
@@ -41,6 +38,9 @@ export const POST = async (req: NextRequest) => {
                 { status: 409 }
             );
         }
+
+        const filePath = join(pdfpath, fileName);
+        await fs.writeFile(filePath, buffer);
 
         const pdf = await prisma.catalog.create({
             data: {

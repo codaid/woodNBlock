@@ -29,9 +29,9 @@ const schema = z.object({
         .refine((file) => file.type === "application/pdf", {
             message: "Le fichier doit être au format PDF",
         })
-        .refine((file) => /^[a-zA-Z0-9 ]+$/.test(file.name), {
+        .refine((file) => /^[a-zA-Z0-9 ]+\.[a-zA-Z0-9]+$/.test(file.name), {
             message:
-                "Le nom du fichier ne doit contenir que des lettres, des chiffres et des espaces",
+                "Le nom du fichier ne doit contenir que des lettres, des chiffres, des espaces et un point suivi de l'extension",
         }),
 });
 
@@ -47,7 +47,7 @@ const UploadCatalog = () => {
 
     const { mutate, isPending } = useMutation({
         mutationFn: async (data: FormData) => {
-            const response = await fetch("/api/upload", {
+            const response = await fetch("/api/catalog", {
                 method: "POST",
                 body: data,
             });
