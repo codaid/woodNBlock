@@ -26,7 +26,7 @@ export const POST = async (req: NextRequest) => {
 
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
-        const fileName = file.name.replace(" ", "_");
+        const fileName = file.name.replaceAll(" ", "_");
 
         const fileExists = await prisma.catalog.findUnique({
             where: { title: fileName },

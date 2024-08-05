@@ -71,7 +71,6 @@ export function UsersTable({
 
 function UserRow({ user }: { user: t_userSelect }) {
     const userId = user.id;
-    const deleteUserWithId = () => console.log("deleted");
     const { mutate, isPending } = useMutation({
         mutationFn: async (dataUpdate: t_userUpdate) =>
             await updateUser(dataUpdate),

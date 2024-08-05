@@ -1,5 +1,5 @@
 import UploadCatalog from "@/components/admin/catalog/uploadCatalog";
-import GridCatalog from "@/components/catalog/gridCatalog";
+import CatalogAdmin from "./catalog";
 
 const CatalogPage = () => {
     return (
@@ -10,7 +10,7 @@ const CatalogPage = () => {
             <div className="mb-4 w-full">
                 <UploadCatalog />
             </div>
-            <GridCatalog />
+            <CatalogAdmin />
         </main>
     );
 };
