@@ -13,10 +13,10 @@ const ContactPage = () => {
     return (
         <Container>
             <span className="text-4xl">✉️</span>
-            <Heading className="mb-2 font-black">Contact Me</Heading>
+            <Heading className="mb-2 font-black">Contactez nous</Heading>
             <Paragraph className="mb-10 max-w-xl">
-                Reach out to me over email or fill up this contact form. I will
-                get back to you ASAP - I promise.{" "}
+                Contactez-nous par email ou remplissez ce formulaire, nous vous
+                répondrons dans les plus brefs délais.
             </Paragraph>
             <Contact />
         </Container>
