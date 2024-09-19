@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ourServices } from "./constante";
 
 export type t_infoForm = z.infer<typeof schemaInfoForm>;
 
@@ -60,33 +61,7 @@ export const schemaInfoForm = z
             })
             .optional(),
 
-        provider: z
-            .array(
-                z.enum([
-                    "VRD",
-                    "Terrassement",
-                    "Fondation et pilotis",
-                    "Gros oeuvre",
-                    "Pose de menuiseries",
-                    "Électricité (classic ou domotique)",
-                    "Plomberie",
-                    "Assainissement",
-                    "Charpente, Toiture",
-                    "Etanchéité",
-                    "Revêtement (saturateur, lasure, vernis, peinture, ...",
-                    "Clôture Portail",
-                    "Mur de soutènement (Moellons ou enrochement)",
-                    "Placoplâtre",
-                    "Carrelage",
-                    "Ebénisterie",
-                    "Piscine",
-                    "Permis de construire",
-                    "Architect d'intérieur",
-                    "Jardinier, paysagiste",
-                    "Autres",
-                ])
-            )
-            .optional(),
+        provider: z.array(z.enum(ourServices)).optional(),
     })
     .refine(
         (data) => {
