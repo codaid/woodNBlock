@@ -26,10 +26,10 @@ const DummyContent1 = () => {
                 // key={"dummy-content" + index}
                 className="mb-4 rounded-3xl bg-[#F5F5F7] p-8 dark:bg-neutral-800 md:p-14"
             >
-                <p className="mx-auto max-w-3xl font-sans text-base text-neutral-600 dark:text-neutral-400 md:text-2xl pb-4">
+                <p className="mx-auto max-w-3xl pb-4 font-sans text-base text-neutral-600 dark:text-neutral-400 md:text-2xl">
                     <span className="font-bold text-neutral-700 dark:text-neutral-200">
-                        La maison bois est tout d'abord un héritage et un rêve
-                        enfant. <br />
+                        La maison bois est tout d&apos;abord un héritage et un
+                        rêve enfant. <br />
                     </span>{" "}
                     Avec Wood’N Block, elle est aussi devenue une idée moderne
                     en phase avec les nouvelles contraintes actuelles
@@ -50,9 +50,9 @@ const DummyContent1 = () => {
 const DummyContent2 = () => {
     return (
         <div className="mb-4 rounded-3xl bg-[#F5F5F7] p-8 dark:bg-neutral-800 md:p-14">
-            <p className="mx-auto max-w-3xl font-sans text-base text-neutral-600 dark:text-neutral-400 md:text-2xl pb-4">
+            <p className="mx-auto max-w-3xl pb-4 font-sans text-base text-neutral-600 dark:text-neutral-400 md:text-2xl">
                 <span className="font-bold text-neutral-700 dark:text-neutral-200">
-                    La maison bois est tout d'abord un héritage et un rêve
+                    La maison bois est tout d&apos;abord un héritage et un rêve
                     enfant. <br />
                 </span>{" "}
                 Avec Wood’N Block, elle est aussi devenue une idée moderne en
@@ -71,9 +71,9 @@ const DummyContent2 = () => {
 const DummyContent3 = () => {
     return (
         <div className="mb-4 rounded-3xl bg-[#F5F5F7] p-8 dark:bg-neutral-800 md:p-14">
-            <p className="mx-auto max-w-3xl font-sans text-base text-neutral-600 dark:text-neutral-400 md:text-2xl pb-4">
+            <p className="mx-auto max-w-3xl pb-4 font-sans text-base text-neutral-600 dark:text-neutral-400 md:text-2xl">
                 <span className="font-bold text-neutral-700 dark:text-neutral-200">
-                    La maison bois est tout d'abord un héritage et un rêve
+                    La maison bois est tout d&apos;abord un héritage et un rêve
                     enfant. <br />
                 </span>{" "}
                 Avec Wood’N Block, elle est aussi devenue une idée moderne en
@@ -92,9 +92,9 @@ const DummyContent3 = () => {
 const DummyContent4 = () => {
     return (
         <div className="mb-4 rounded-3xl bg-[#F5F5F7] p-8 dark:bg-neutral-800 md:p-14">
-            <p className="mx-auto max-w-3xl font-sans text-base text-neutral-600 dark:text-neutral-400 md:text-2xl pb-4">
+            <p className="mx-auto max-w-3xl pb-4 font-sans text-base text-neutral-600 dark:text-neutral-400 md:text-2xl">
                 <span className="font-bold text-neutral-700 dark:text-neutral-200">
-                    La maison bois est tout d'abord un héritage et un rêve
+                    La maison bois est tout d&apos;abord un héritage et un rêve
                     enfant. <br />
                 </span>{" "}
                 Avec Wood’N Block, elle est aussi devenue une idée moderne en

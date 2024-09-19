@@ -109,7 +109,7 @@ const InfoForms = () => {
                         Coordonnées du contact
                     </Heading>
 
-                    <p className="text-sm lg:text-base font-normal text-secondary py-4">
+                    <p className="py-4 text-sm font-normal text-secondary lg:text-base">
                         Les informations demandées ci-dessous servent à vous
                         mettre en relation avec la personne la plus proche de
                         chez vous en cas de besoin de rendez-vous
@@ -291,7 +291,7 @@ const InfoForms = () => {
                                 />
 
                                 {haveSiteBuildingWatch === true && (
-                                    <div className="grid sm:grid-cols-2 gap-x-2">
+                                    <div className="grid gap-x-2 sm:grid-cols-2">
                                         <FormField
                                             control={form.control}
                                             name="constructionProject.buildingPostCode"
@@ -495,7 +495,7 @@ const InfoForms = () => {
                                     control={form.control}
                                     name="provider"
                                     render={({ field }) => (
-                                        <FormItem className="w-fit grid grid-cols-2 gap-2">
+                                        <FormItem className="grid w-fit grid-cols-2 gap-2">
                                             {ourServices.map((service) => (
                                                 <FormControl>
                                                     <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md">

@@ -132,7 +132,7 @@ export const Contact = () => {
                     />
                 </div>
                 <Button
-                    className="mt-4 w-full rounded-md p-2 font-bold flex justify-center items-center"
+                    className="mt-4 flex w-full items-center justify-center rounded-md p-2 font-bold"
                     type="submit"
                 >
                     Envoyer <LuSend className="ml-2" />
