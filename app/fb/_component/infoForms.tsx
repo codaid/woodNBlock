@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
     Form,
@@ -535,6 +536,9 @@ const InfoForms = () => {
                             </div>
                         </>
                     )}
+                    <Button type="submit" className="w-full py-5">
+                        Envoyer
+                    </Button>
                 </form>
             </Form>
         </div>

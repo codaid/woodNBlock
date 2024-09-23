@@ -1,3 +1,5 @@
+import { Footer } from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 import Authentication from "@/components/layout/home/authentication";
 import { getAuthSession } from "@/lib/auth";
 import { PropsWithChildren } from "react";
@@ -12,7 +14,13 @@ const LayoutCommercial = async ({ children }: PropsWithChildren) => {
             </div>
         );
 
-    return children;
+    return (
+        <>
+            <Header />
+            {children}
+            <Footer />
+        </>
+    );
 };
 
 export default LayoutCommercial;

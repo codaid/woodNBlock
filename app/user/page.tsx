@@ -1,7 +1,30 @@
+"use client";
+
+import NotLogged from "@/components/layout/NotLogged";
 import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Loader from "@/components/ui/loader";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
-const page = () => {
+const UserPage = () => {
+    const { isLoading, session } = useAuth();
+    const router = useRouter();
+
+    if (isLoading) return <Loader />;
+
+    if (!session) return <NotLogged />;
+
+    const user = session.user;
+
+    if (user.userType === "admin") {
+        router.push("/admin");
+    }
+
+    if (user.userType === "commercial") {
+        router.push("/commercial");
+    }
+
     return (
         <div className="mx-auto mt-12 w-fit">
             <BackgroundGradient>
@@ -35,4 +58,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default UserPage;

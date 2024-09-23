@@ -1,6 +1,7 @@
 import { NavItem } from "@/components/admin/navItem";
 import { Logo } from "@/components/icons";
 import Authentication from "@/components/layout/home/authentication";
+import Menu from "@/components/layout/menu";
 import AuthButton from "@/features/AuthButton";
 import { getAuthSession } from "@/lib/auth";
 import Link from "next/link";
@@ -55,8 +56,9 @@ const LayoutAdmin = async ({ children }: PropsWithChildren) => {
                         href="/"
                     >
                         <Logo />
-                        <span className="">ACME</span>
+                        <span className="">Wood&apos;N Block</span>
                     </Link>
+                    <Menu />
                     <AuthButton />
                 </header>
                 {children}
