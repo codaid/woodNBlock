@@ -7,7 +7,7 @@ export const schemaInfoForm = z
     .object({
         firstname: z.string().min(1, { message: "Votre prénom est requis" }),
         lastname: z.string().min(1, { message: "Votre nom est requis" }),
-        phone: z.number().min(10, { message: "Votre numéro est requis" }),
+        phone: z.string().regex(/^\d+$/, "Numéro de téléphone invalide"),
         email: z.string().email({ message: "Format de mail non valide" }),
         address: z
             .object({

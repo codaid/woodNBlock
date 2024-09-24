@@ -1,14 +1,14 @@
 import { Container } from "@/components/ui/container";
-import FbHeroe from "./_component/fb_heroe";
 import InfoForms from "./_component/infoForms";
+import RdvHeroe from "./_component/rdvHeroe";
 
-const FBPage = () => {
+const RdvPage = () => {
     return (
         <Container>
-            <FbHeroe />
+            <RdvHeroe />
             <InfoForms />
         </Container>
     );
 };
 
-export default FBPage;
+export default RdvPage;

@@ -2,17 +2,17 @@ import { LuMail, LuNewspaper, LuZap } from "react-icons/lu";
 
 export const navlinks = [
     {
-        href: "/fb",
+        href: "/rdv",
         label: "Accueil",
         icon: LuZap,
     },
     {
-        href: "/fb/about",
+        href: "/rdv/about",
         label: "A propos",
         icon: LuNewspaper,
     },
     {
-        href: "/fb/contact",
+        href: "/rdv/contact",
         label: "Contact",
         icon: LuMail,
     },

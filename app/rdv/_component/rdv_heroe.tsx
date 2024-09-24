@@ -2,7 +2,7 @@
 import { Card, Carousel } from "@/components/ui/apple-cards-carousel";
 import Image from "next/image";
 
-const FbHeroe = () => {
+const RdvHeroe = () => {
     const cards = data.map((card, index) => (
         <Card key={card.title.replaceAll(" ", "_")} card={card} index={index} />
     ));
@@ -157,4 +157,4 @@ const data: dataType[] = [
     // },
 ];
 
-export default FbHeroe;
+export default RdvHeroe;
