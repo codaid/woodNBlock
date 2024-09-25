@@ -67,6 +67,21 @@ const config = {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
+                color_primary: {
+                    DEFAULT: "hsl(var(--color-primary))",
+                    foreground: "hsl(var(--color-primary-foreground))",
+                    light: "hsl(var(--color-primary-light))",
+                },
+                color_secondary: {
+                    DEFAULT: "hsl(var(--color-secondary))",
+                    foreground: "hsl(var(--color-secondary-foreground))",
+                },
+                color_light: {
+                    DEFAULT: "hsl(var(--color-light))",
+                },
+                color_dark: {
+                    DEFAULT: "hsl(var(--color-dark))",
+                },
             },
             borderRadius: {
                 lg: "var(--radius)",
@@ -77,6 +92,7 @@ const config = {
                 "accordion-down": "accordion-down 0.2s ease-out",
                 "accordion-up": "accordion-up 0.2s ease-out",
                 aurora: "aurora 60s linear infinite",
+                pulse: "pulse var(--duration) ease-out infinite",
             },
             keyframes: {
                 "accordion-down": {
@@ -94,6 +110,10 @@ const config = {
                     to: {
                         backgroundPosition: "350% 50%, 350% 50%",
                     },
+                },
+                pulse: {
+                    "0%, 100%": { boxShadow: "0 0 0 0 var(--pulse-color)" },
+                    "50%": { boxShadow: "0 0 0 8px var(--pulse-color)" },
                 },
             },
         },

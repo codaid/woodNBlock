@@ -56,7 +56,7 @@ export const Contact = () => {
                     <input
                         type="text"
                         placeholder="Nom"
-                        className="w-full rounded-md bg-neutral-100 p-2 text-sm text-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-200"
+                        className="w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
                         value={formData.name.value}
                         onChange={(e) => {
                             setFormData({
@@ -71,7 +71,7 @@ export const Contact = () => {
                     <input
                         type="text"
                         placeholder="Télephone"
-                        className="w-full rounded-md bg-neutral-100 p-2 text-sm text-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-200"
+                        className="w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
                         value={formData.name.value}
                         onChange={(e) => {
                             setFormData({
@@ -86,7 +86,7 @@ export const Contact = () => {
                     <input
                         type="email"
                         placeholder="Email"
-                        className="w-full rounded-md bg-neutral-100 p-2 text-sm text-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-200"
+                        className="w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
                         value={formData.email.value}
                         onChange={(e) => {
                             setFormData({
@@ -103,7 +103,7 @@ export const Contact = () => {
                     <input
                         type="text"
                         placeholder="Object"
-                        className="w-full rounded-md bg-neutral-100 p-2 text-sm text-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-200"
+                        className="w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
                         value={formData.email.value}
                         onChange={(e) => {
                             setFormData({
@@ -118,7 +118,7 @@ export const Contact = () => {
                     <textarea
                         placeholder="Votre message"
                         rows={10}
-                        className="mt-4 w-full rounded-md bg-neutral-100 p-2 text-sm text-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-200"
+                        className="mt-4 w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
                         value={formData.message.value}
                         onChange={(e) => {
                             setFormData({
@@ -132,7 +132,8 @@ export const Contact = () => {
                     />
                 </div>
                 <Button
-                    className="mt-4 flex w-full items-center justify-center rounded-md p-2 font-bold"
+                    variant={"ringHover"}
+                    className="mt-4 flex w-full items-center justify-center rounded-md bg-color_primary p-2 font-bold text-color_light hover:bg-color_primary hover:ring-color_primary"
                     type="submit"
                 >
                     Envoyer <LuSend className="ml-2" />

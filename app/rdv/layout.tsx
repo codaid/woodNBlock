@@ -1,10 +1,5 @@
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Sidebar } from "./_sidebar";
-// import "./globals.css";
-
-// const inter = Inter({
-//     subsets: ["latin"],
-//     weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-// });
 
 export default function RootLayout({
     children,
@@ -12,10 +7,13 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="flex h-full overflow-hidden bg-gray-100 antialiased">
+        <div className="relative flex h-screen overflow-hidden bg-background antialiased dark:bg-background">
+            <div className="fixed right-4 top-4 z-10 rounded-full">
+                <ThemeToggle />
+            </div>
             <Sidebar />
-            <div className="flex-1 overflow-y-auto bg-gray-100 lg:pl-2 lg:pt-2">
-                <div className="min-h-screen flex-1 overflow-y-auto border border-transparent bg-white lg:rounded-tl-xl lg:border-neutral-200">
+            <div className="flex-1 overflow-y-auto bg-background dark:bg-background lg:pl-2 lg:pt-2">
+                <div className="min-h-screen flex-1 overflow-y-auto border border-transparent bg-background lg:rounded-tl-xl lg:border-neutral-200">
                     {children}
                 </div>
             </div>

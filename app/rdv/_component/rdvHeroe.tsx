@@ -11,27 +11,25 @@ import Balancer from "react-wrap-balancer";
 
 // Asset imports
 import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
-import { motion } from "framer-motion";
+import Fade from "@/components/ui/codaidComp/motion/fade";
+import ScrollButton from "@/components/ui/codaidComp/ScrollButton";
+import { Heading } from "@/components/ui/heading";
 
 const Hero = () => {
+    const gotoContactForms = () => {
+        const contactSection = document.getElementById("contactForms");
+        contactSection?.scrollIntoView({
+            behavior: "smooth",
+        });
+    };
+
     return (
-        <Container>
-            <motion.div
-                initial={{
-                    opacity: 0,
-                    y: -50,
-                }}
-                animate={{
-                    opacity: 1,
-                    y: 0,
-                }}
-                transition={{ duration: 0.2, delay: 0.1 }}
-            >
+        <div className="sm:mt-20">
+            <Fade className="flex flex-col justify-between p-0">
                 <div>
                     <Button
                         asChild
-                        className="mb-6 w-fit"
+                        className="mb-6 w-fit border-color_primary"
                         size={"sm"}
                         variant={"outline"}
                     >
@@ -39,20 +37,20 @@ const Hero = () => {
                             className="not-prose"
                             href="#contactForms"
                             onClick={(e) => {
-                                e.preventDefault(); // Empêche la navigation par défaut
-                                const contactSection =
-                                    document.getElementById("contactForms");
-                                contactSection?.scrollIntoView({
-                                    behavior: "smooth",
-                                }); // Scroll smooth vers l'ancre
+                                e.preventDefault();
+                                gotoContactForms();
                             }}
                         >
                             En savoir plus <LuArrowRight className="size-4" />
                         </Link>
                     </Button>
-                    <h1>
-                        <Balancer>Wood&apos;N Block</Balancer>
-                    </h1>
+                    <div>
+                        <Balancer>
+                            <Heading className="bg-gradient-to-r from-color_primary to-color_primary-light text-3xl font-bold">
+                                Wood&apos;N Block
+                            </Heading>
+                        </Balancer>
+                    </div>
                     <h3 className="text-muted-foreground">
                         <Balancer>
                             Votre maison n&apos;est plus qu&apos;a un clic !
@@ -62,14 +60,20 @@ const Hero = () => {
                         <Image
                             className="size-full object-cover object-bottom"
                             src="/images/photo_05.jpg"
-                            width={1280 * 1.5}
-                            height={652 * 1.5}
+                            width={1280}
+                            height={652}
                             alt="hero image"
                         />
                     </div>
                 </div>
-            </motion.div>
-        </Container>
+
+                <div className="mt-14 flex justify-center">
+                    <ScrollButton callBack={gotoContactForms}>
+                        Voir plus
+                    </ScrollButton>
+                </div>
+            </Fade>
+        </div>
     );
 };
 

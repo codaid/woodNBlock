@@ -2,12 +2,12 @@ import { LuFacebook, LuLinkedin, LuTwitter } from "react-icons/lu";
 
 export const socials = [
     {
-        href: "https://woodnblock.com/fb",
+        href: "https://woodnblock.com/rdv",
         label: "Twitter",
         icon: LuTwitter,
     },
     {
-        href: "https://woodnblock.com/fb",
+        href: "https://woodnblock.com/rdv/about",
         label: "LinkedIn",
         icon: LuLinkedin,
     },

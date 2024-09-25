@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import Bounce from "@/components/ui/codaidComp/motion/bounce";
 import {
     Form,
     FormControl,
@@ -14,7 +15,6 @@ import {
 import { Heading } from "@/components/ui/heading";
 import { Input } from "@/components/ui/input";
 import Loader from "@/components/ui/loader";
-import BounceUp from "@/components/ui/motion/bounceUp";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { useMutation } from "@tanstack/react-query";
@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { ourServices, rdvTypeSentence } from "./constante";
+import PicturesGallery from "./picturesGallery";
 import { schemaInfoForm, t_infoForm } from "./typeInfoForm";
 
 const InfoForms = () => {
@@ -102,19 +103,25 @@ const InfoForms = () => {
                     id="contactForms"
                     className={isPending ? "pointer-events-none" : ""}
                 >
-                    <BounceUp>
+                    <Bounce className="mt-14">
                         <Heading as="h2" className="ml-5 p-5">
                             Fiche contact
                         </Heading>
-                    </BounceUp>
+                    </Bounce>
 
                     <FormField
                         control={form.control}
                         name="rdvType"
                         render={({ field }) => (
-                            <FormItem className="w-fit">
+                            <FormItem
+                                className={
+                                    form.formState.errors.rdvType
+                                        ? "w-fit border border-destructive"
+                                        : "w-fit"
+                                }
+                            >
                                 {rdvTypeSentence.map((item, index) => (
-                                    <BounceUp>
+                                    <Bounce>
                                         <FormControl>
                                             <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                                                 <Checkbox
@@ -149,36 +156,52 @@ const InfoForms = () => {
                                                 {/* </div> */}
                                             </div>
                                         </FormControl>
-                                    </BounceUp>
+                                    </Bounce>
                                 ))}
                             </FormItem>
                         )}
                     />
+                    <PicturesGallery
+                        reverse
+                        images={[
+                            "/images/photo_01.jpg",
+                            "/images/photo_02.jpg",
+                            "/images/photo_03.jpg",
+                        ]}
+                    />
 
-                    <BounceUp>
+                    {/* Coordonée */}
+                    <Bounce className="mt-14">
                         <Heading as="h2" className="ml-5 p-5">
                             Coordonnées du contact
                         </Heading>
-                    </BounceUp>
+                    </Bounce>
 
-                    <BounceUp>
-                        <p className="py-4 text-sm font-normal text-secondary lg:text-base">
+                    <Bounce>
+                        <p className="py-4 text-sm font-normal text-secondary dark:text-slate-400 lg:text-base">
                             Les informations demandées ci-dessous servent à vous
                             mettre en relation avec la personne la plus proche
                             de chez vous en cas de besoin de rendez-vous
                         </p>
-                    </BounceUp>
+                    </Bounce>
 
                     <div className="flex flex-col gap-y-4 border p-4">
                         <div className="grid gap-x-2 sm:grid-cols-2">
-                            <BounceUp>
+                            <Bounce>
                                 <FormField
                                     control={form.control}
                                     name="firstname"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Prénom</FormLabel>
-                                            <FormControl>
+                                            <FormControl
+                                                className={
+                                                    form.formState.errors
+                                                        .firstname
+                                                        ? "border-destructive"
+                                                        : ""
+                                                }
+                                            >
                                                 <Input
                                                     placeholder="Prénom"
                                                     {...field}
@@ -189,16 +212,23 @@ const InfoForms = () => {
                                         </FormItem>
                                     )}
                                 />
-                            </BounceUp>
+                            </Bounce>
 
-                            <BounceUp>
+                            <Bounce>
                                 <FormField
                                     control={form.control}
                                     name="lastname"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Nom</FormLabel>
-                                            <FormControl>
+                                            <FormControl
+                                                className={
+                                                    form.formState.errors
+                                                        .lastname
+                                                        ? "border-destructive"
+                                                        : ""
+                                                }
+                                            >
                                                 <Input
                                                     type="text"
                                                     placeholder="DOE"
@@ -210,11 +240,11 @@ const InfoForms = () => {
                                         </FormItem>
                                     )}
                                 />
-                            </BounceUp>
+                            </Bounce>
                         </div>
 
                         <div className="grid grid-cols-2 gap-x-2 pt-4">
-                            <BounceUp>
+                            <Bounce>
                                 <FormField
                                     control={form.control}
                                     name="address.street"
@@ -235,16 +265,23 @@ const InfoForms = () => {
                                         </FormItem>
                                     )}
                                 />
-                            </BounceUp>
+                            </Bounce>
 
-                            <BounceUp>
+                            <Bounce>
                                 <FormField
                                     control={form.control}
                                     name="address.postCode"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Code postale</FormLabel>
-                                            <FormControl>
+                                            <FormControl
+                                                className={
+                                                    form.formState.errors
+                                                        .address?.postCode
+                                                        ? "border-destructive"
+                                                        : ""
+                                                }
+                                            >
                                                 <Input
                                                     type="text"
                                                     placeholder="97400"
@@ -256,16 +293,23 @@ const InfoForms = () => {
                                         </FormItem>
                                     )}
                                 />
-                            </BounceUp>
+                            </Bounce>
 
-                            <BounceUp className="col-span-2">
+                            <Bounce className="col-span-2">
                                 <FormField
                                     control={form.control}
                                     name="address.city"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Ville</FormLabel>
-                                            <FormControl>
+                                            <FormControl
+                                                className={
+                                                    form.formState.errors
+                                                        .address?.city
+                                                        ? "border-destructive"
+                                                        : ""
+                                                }
+                                            >
                                                 <Input
                                                     type="text"
                                                     placeholder="Saint-Denis"
@@ -277,18 +321,24 @@ const InfoForms = () => {
                                         </FormItem>
                                     )}
                                 />
-                            </BounceUp>
+                            </Bounce>
                         </div>
 
                         <div className="grid grid-cols-2 gap-x-2 pt-4">
-                            <BounceUp>
+                            <Bounce>
                                 <FormField
                                     control={form.control}
                                     name="phone"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Télephone</FormLabel>
-                                            <FormControl>
+                                            <FormControl
+                                                className={
+                                                    form.formState.errors.phone
+                                                        ? "border-destructive"
+                                                        : ""
+                                                }
+                                            >
                                                 <Input
                                                     type="number"
                                                     placeholder="069# ## ## ##"
@@ -300,16 +350,22 @@ const InfoForms = () => {
                                         </FormItem>
                                     )}
                                 />
-                            </BounceUp>
+                            </Bounce>
 
-                            <BounceUp>
+                            <Bounce>
                                 <FormField
                                     control={form.control}
                                     name="email"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Email</FormLabel>
-                                            <FormControl>
+                                            <FormControl
+                                                className={
+                                                    form.formState.errors.email
+                                                        ? "border-destructive"
+                                                        : ""
+                                                }
+                                            >
                                                 <Input
                                                     type="email"
                                                     placeholder="mail@mail.com"
@@ -321,20 +377,35 @@ const InfoForms = () => {
                                         </FormItem>
                                     )}
                                 />
-                            </BounceUp>
+                            </Bounce>
                         </div>
                     </div>
+
+                    <PicturesGallery
+                        images={[
+                            "/images/photo_04.jpg",
+                            "/images/photo_05.jpg",
+                            "/images/photo_06.jpg",
+                        ]}
+                    />
 
                     {/* constructionProject */}
                     <AnimatePresence mode="popLayout">
                         {rdvTypeWatch?.includes("constructionProject") && (
                             <motion.div layout>
-                                <BounceUp key={"constructionProject"}>
+                                <Bounce key={"constructionProject"}>
                                     <Heading as="h2" className="ml-5 p-5">
                                         Proget de construction
                                     </Heading>
 
-                                    <div className="flex flex-col gap-y-4 border p-4">
+                                    <div
+                                        className={`flex flex-col gap-y-4 border p-4 ${
+                                            form.formState.errors
+                                                .constructionProject
+                                                ? "border-destructive"
+                                                : ""
+                                        }`}
+                                    >
                                         <FormField
                                             control={form.control}
                                             name="constructionProject.haveBuildingSite"
@@ -370,7 +441,7 @@ const InfoForms = () => {
                                                 layout
                                                 className="grid gap-x-2 sm:grid-cols-2"
                                             >
-                                                <BounceUp>
+                                                <Bounce>
                                                     <FormField
                                                         control={form.control}
                                                         name="constructionProject.buildingPostCode"
@@ -391,9 +462,9 @@ const InfoForms = () => {
                                                             </FormItem>
                                                         )}
                                                     />
-                                                </BounceUp>
+                                                </Bounce>
 
-                                                <BounceUp>
+                                                <Bounce>
                                                     <FormField
                                                         control={form.control}
                                                         name="constructionProject.parcelNumber"
@@ -416,7 +487,7 @@ const InfoForms = () => {
                                                             </FormItem>
                                                         )}
                                                     />
-                                                </BounceUp>
+                                                </Bounce>
                                             </motion.div>
                                         )}
 
@@ -496,17 +567,25 @@ const InfoForms = () => {
                                             )}
                                         />
                                     </div>
-                                </BounceUp>
+                                </Bounce>
                             </motion.div>
                         )}
+
+                        {/* becomeReseller */}
                         {rdvTypeWatch?.includes("becomeReseller") && (
                             <motion.div layout>
-                                <BounceUp key={"becomeReseller"}>
+                                <Bounce key={"becomeReseller"}>
                                     <Heading as="h2" className="ml-5 p-5">
                                         Devenir revendeur
                                     </Heading>
 
-                                    <div className="flex flex-col gap-y-4 border p-4">
+                                    <div
+                                        className={`flex flex-col gap-y-4 border p-4 ${
+                                            form.formState.errors.reseller
+                                                ? "border-destructive"
+                                                : ""
+                                        }`}
+                                    >
                                         <FormField
                                             control={form.control}
                                             name="reseller.haveIndividualBusiness"
@@ -585,17 +664,25 @@ const InfoForms = () => {
                                             )}
                                         />
                                     </div>
-                                </BounceUp>
+                                </Bounce>
                             </motion.div>
                         )}
+
+                        {/* becomeProvider */}
                         {rdvTypeWatch?.includes("becomeProvider") && (
                             <motion.div layout>
-                                <BounceUp key={"becomeProvider"}>
+                                <Bounce key={"becomeProvider"}>
                                     <Heading as="h2" className="ml-5 p-5">
                                         Devenir partenaire
                                     </Heading>
 
-                                    <div className="flex flex-col gap-y-4 border p-4">
+                                    <div
+                                        className={`flex flex-col gap-y-4 border p-4 ${
+                                            form.formState.errors.provider
+                                                ? "border-destructive"
+                                                : ""
+                                        }`}
+                                    >
                                         <FormField
                                             control={form.control}
                                             name="provider"
@@ -646,7 +733,14 @@ const InfoForms = () => {
                                             )}
                                         />
                                     </div>
-                                </BounceUp>
+                                </Bounce>
+                                <PicturesGallery
+                                    images={[
+                                        "/images/photo_12.jpg",
+                                        "/images/photo_16.jpg",
+                                        "/images/photo_17.jpg",
+                                    ]}
+                                />
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -655,7 +749,7 @@ const InfoForms = () => {
                         <Button
                             type="submit"
                             disabled={isPending}
-                            className="mt-5 w-full py-5"
+                            className="mt-5 w-full bg-color_primary py-5"
                         >
                             Envoyer
                         </Button>

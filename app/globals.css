@@ -4,8 +4,11 @@
 
 @layer base {
     :root {
-        --background: 0 0% 100%;
+        --background: 0 0% 96%;
         --foreground: 0 0% 3.9%;
+
+        --color-light: 0 0% 96%;
+        --color-dark: 29 100% 5%;
 
         --card: 0 0% 100%;
         --card-foreground: 0 0% 3.9%;
@@ -28,6 +31,13 @@
         --destructive: 0 84.2% 60.2%;
         --destructive-foreground: 0 0% 98%;
 
+        --color-primary: 28 95% 33%;
+        --color-primary-foreground: 0 0% 98%;
+        --color-primary-light: 28 81% 52%;
+
+        --color-secondary: 49 93% 63%;
+        --color-secondary-foreground: 0 0% 98%;
+
         --border: 0 0% 89.8%;
         --input: 0 0% 89.8%;
         --ring: 0 0% 3.9%;
@@ -36,7 +46,7 @@
     }
 
     .dark {
-        --background: 0 0% 3.9%;
+        --background: 29 100% 5%;
         --foreground: 0 0% 98%;
 
         --card: 0 0% 3.9%;
@@ -48,8 +58,8 @@
         --primary: 0 0% 98%;
         --primary-foreground: 0 0% 9%;
 
-        --secondary: 0 0% 14.9%;
-        --secondary-foreground: 0 0% 98%;
+        --secondary: 0, 0%, 86%;
+        --secondary-foreground: 0 0% 15%;
 
         --muted: 0 0% 14.9%;
         --muted-foreground: 0 0% 63.9%;
@@ -57,7 +67,7 @@
         --accent: 0 0% 14.9%;
         --accent-foreground: 0 0% 98%;
 
-        --destructive: 0 62.8% 30.6%;
+        --destructive: 0 52% 44%;
         --destructive-foreground: 0 0% 98%;
 
         --border: 0 0% 14.9%;

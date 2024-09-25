@@ -1,7 +1,7 @@
-import BounceUp from "@/components/ui/motion/bounceUp";
+import Bounce from "@/components/ui/codaidComp/motion/bounce";
 
 const ThanksPage = () => {
-    return <BounceUp className="text-center text-lg">Merci</BounceUp>;
+    return <Bounce className="text-center text-lg">Merci</Bounce>;
 };
 
 export default ThanksPage;
