@@ -33,7 +33,7 @@ const InfoForms = () => {
         defaultValues: {
             firstname: "",
             lastname: "",
-            rdvType: undefined,
+            rdvTypes: undefined,
         },
     });
 
@@ -71,9 +71,9 @@ const InfoForms = () => {
         console.error(error);
     };
 
-    const rdvTypeWatch = form.watch("rdvType");
+    const rdvTypeWatch = form.watch("rdvTypes");
     const haveSiteBuildingWatch = form.watch(
-        "constructionProject.haveBuildingSite"
+        "constructionProject_haveBuildingSite"
     );
 
     const onCheckedChange = (
@@ -81,7 +81,7 @@ const InfoForms = () => {
         field: any,
         name: string
     ) => {
-        const newValue = field.value || []; // Assure que field.value est toujours un tableau
+        const newValue = field.value || [];
         if (checked) {
             field.onChange([...newValue, name]);
         } else {
@@ -111,11 +111,11 @@ const InfoForms = () => {
 
                     <FormField
                         control={form.control}
-                        name="rdvType"
+                        name="rdvTypes"
                         render={({ field }) => (
                             <FormItem
                                 className={
-                                    form.formState.errors.rdvType
+                                    form.formState.errors.rdvTypes
                                         ? "w-fit border border-destructive"
                                         : "w-fit"
                                 }
@@ -143,7 +143,6 @@ const InfoForms = () => {
                                                         )
                                                     }
                                                 />
-                                                {/* <div className="space-y-1 leading-none"> */}
                                                 <FormLabel
                                                     htmlFor={item.id}
                                                     className="space-y-1 leading-none"
@@ -153,7 +152,6 @@ const InfoForms = () => {
                                                         {item.description}
                                                     </FormDescription>
                                                 </FormLabel>
-                                                {/* </div> */}
                                             </div>
                                         </FormControl>
                                     </Bounce>
@@ -247,7 +245,7 @@ const InfoForms = () => {
                             <Bounce>
                                 <FormField
                                     control={form.control}
-                                    name="address.street"
+                                    name="address_street"
                                     render={({ field }) => (
                                         <FormItem className="col-span-2">
                                             <FormLabel>
@@ -270,14 +268,14 @@ const InfoForms = () => {
                             <Bounce>
                                 <FormField
                                     control={form.control}
-                                    name="address.postCode"
+                                    name="address_postCode"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Code postale</FormLabel>
                                             <FormControl
                                                 className={
                                                     form.formState.errors
-                                                        .address?.postCode
+                                                        .address_postCode
                                                         ? "border-destructive"
                                                         : ""
                                                 }
@@ -298,14 +296,14 @@ const InfoForms = () => {
                             <Bounce className="col-span-2">
                                 <FormField
                                     control={form.control}
-                                    name="address.city"
+                                    name="address_city"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>Ville</FormLabel>
                                             <FormControl
                                                 className={
                                                     form.formState.errors
-                                                        .address?.city
+                                                        .address_city
                                                         ? "border-destructive"
                                                         : ""
                                                 }
@@ -401,14 +399,14 @@ const InfoForms = () => {
                                     <div
                                         className={`flex flex-col gap-y-4 border p-4 ${
                                             form.formState.errors
-                                                .constructionProject
+                                                .constructionProject_buildingPostCode
                                                 ? "border-destructive"
                                                 : ""
                                         }`}
                                     >
                                         <FormField
                                             control={form.control}
-                                            name="constructionProject.haveBuildingSite"
+                                            name="constructionProject_haveBuildingSite"
                                             render={({ field }) => (
                                                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
                                                     <FormControl>
@@ -444,7 +442,7 @@ const InfoForms = () => {
                                                 <Bounce>
                                                     <FormField
                                                         control={form.control}
-                                                        name="constructionProject.buildingPostCode"
+                                                        name="constructionProject_buildingPostCode"
                                                         render={({ field }) => (
                                                             <FormItem>
                                                                 <FormLabel>
@@ -467,7 +465,7 @@ const InfoForms = () => {
                                                 <Bounce>
                                                     <FormField
                                                         control={form.control}
-                                                        name="constructionProject.parcelNumber"
+                                                        name="constructionProject_parcelNumber"
                                                         render={({ field }) => (
                                                             <FormItem>
                                                                 <FormLabel>
@@ -493,7 +491,7 @@ const InfoForms = () => {
 
                                         <FormField
                                             control={form.control}
-                                            name="constructionProject.havePlan"
+                                            name="constructionProject_havePlan"
                                             render={({ field }) => (
                                                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
                                                     <FormControl>
@@ -517,7 +515,7 @@ const InfoForms = () => {
                                         />
                                         <FormField
                                             control={form.control}
-                                            name="constructionProject.haveIdeaProject"
+                                            name="constructionProject_haveIdeaProject"
                                             render={({ field }) => (
                                                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
                                                     <FormControl>
@@ -543,7 +541,7 @@ const InfoForms = () => {
                                         />
                                         <FormField
                                             control={form.control}
-                                            name="constructionProject.wantSeeTemplate"
+                                            name="constructionProject_wantSeeTemplate"
                                             render={({ field }) => (
                                                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
                                                     <FormControl>
@@ -580,15 +578,13 @@ const InfoForms = () => {
                                     </Heading>
 
                                     <div
-                                        className={`flex flex-col gap-y-4 border p-4 ${
-                                            form.formState.errors.reseller
-                                                ? "border-destructive"
-                                                : ""
-                                        }`}
+                                        className={
+                                            "flex flex-col gap-y-4 border p-4"
+                                        }
                                     >
                                         <FormField
                                             control={form.control}
-                                            name="reseller.haveIndividualBusiness"
+                                            name="reseller_haveIndividualBusiness"
                                             render={({ field }) => (
                                                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
                                                     <FormControl>
@@ -613,7 +609,7 @@ const InfoForms = () => {
 
                                         <FormField
                                             control={form.control}
-                                            name="reseller.legalRepresentativ"
+                                            name="reseller_legalRepresentativ"
                                             render={({ field }) => (
                                                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
                                                     <FormControl>
@@ -640,7 +636,7 @@ const InfoForms = () => {
 
                                         <FormField
                                             control={form.control}
-                                            name="reseller.wantMoreBeforeOpeningBusiness"
+                                            name="reseller_wantMoreBeforeOpeningBusiness"
                                             render={({ field }) => (
                                                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md">
                                                     <FormControl>
@@ -678,14 +674,15 @@ const InfoForms = () => {
 
                                     <div
                                         className={`flex flex-col gap-y-4 border p-4 ${
-                                            form.formState.errors.provider
+                                            form.formState.errors
+                                                .providerServices
                                                 ? "border-destructive"
                                                 : ""
                                         }`}
                                     >
                                         <FormField
                                             control={form.control}
-                                            name="provider"
+                                            name="providerServices"
                                             render={({ field }) => (
                                                 <FormItem className="grid w-fit grid-cols-2 gap-2">
                                                     {ourServices.map(

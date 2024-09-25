@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@auth/prisma-adapter':
     specifier: ^2.0.0
-    version: 2.0.0(@prisma/client@5.13.0)
+    version: 2.0.0(@prisma/client@5.13.0)(nodemailer@6.9.15)
   '@hookform/resolvers':
     specifier: ^3.3.4
     version: 3.3.4(react-hook-form@7.51.3)
@@ -83,6 +83,9 @@ dependencies:
   '@types/bcrypt':
     specifier: ^5.0.2
     version: 5.0.2
+  '@types/nodemailer':
+    specifier: ^6.4.16
+    version: 6.4.16
   bcrypt:
     specifier: ^5.1.1
     version: 5.1.1
@@ -103,10 +106,13 @@ dependencies:
     version: 14.2.3(react-dom@18.2.0)(react@18.2.0)
   next-auth:
     specifier: ^4.24.7
-    version: 4.24.7(next@14.2.3)(react-dom@18.2.0)(react@18.2.0)
+    version: 4.24.7(next@14.2.3)(nodemailer@6.9.15)(react-dom@18.2.0)(react@18.2.0)
   next-themes:
     specifier: ^0.3.0
     version: 0.3.0(react-dom@18.2.0)(react@18.2.0)
+  nodemailer:
+    specifier: ^6.9.15
+    version: 6.9.15
   pdfjs-dist:
     specifier: ^4.4.168
     version: 4.4.168
@@ -193,7 +199,7 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  /@auth/core@0.30.0:
+  /@auth/core@0.30.0(nodemailer@6.9.15):
     resolution: {integrity: sha512-8AE4m/nk+4EIiVCJwxZAsJeAQuzpEC8M8768mmKVn60CGDdupKQkVhxbRlm5Qh7eNRCoFFME+0DvtaX2aXrYaA==}
     peerDependencies:
       '@simplewebauthn/browser': ^9.0.1
@@ -211,17 +217,18 @@ packages:
       '@types/cookie': 0.6.0
       cookie: 0.6.0
       jose: 5.2.4
+      nodemailer: 6.9.15
       oauth4webapi: 2.10.4
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
 
-  /@auth/prisma-adapter@2.0.0(@prisma/client@5.13.0):
+  /@auth/prisma-adapter@2.0.0(@prisma/client@5.13.0)(nodemailer@6.9.15):
     resolution: {integrity: sha512-ZBH9mXBIeWNRl/HOWd+nnxZym42wQPsIeC69jlkShpEAYt1tB+ubwL13EdfG2GRueOG3+rkWOSHaDajyKdWe9w==}
     peerDependencies:
       '@prisma/client': '>=2.26.0 || >=3 || >=4 || >=5'
     dependencies:
-      '@auth/core': 0.30.0
+      '@auth/core': 0.30.0(nodemailer@6.9.15)
       '@prisma/client': 5.13.0(prisma@5.13.0)
     transitivePeerDependencies:
       - '@simplewebauthn/browser'
@@ -389,7 +396,7 @@ packages:
       next-auth: ^4
     dependencies:
       '@prisma/client': 5.13.0(prisma@5.13.0)
-      next-auth: 4.24.7(next@14.2.3)(react-dom@18.2.0)(react@18.2.0)
+      next-auth: 4.24.7(next@14.2.3)(nodemailer@6.9.15)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@next/env@14.2.3:
@@ -1797,6 +1804,12 @@ packages:
     resolution: {integrity: sha512-wq0cICSkRLVaf3UGLMGItu/PtdY7oaXaI/RVU+xliKVOtRna3PRY57ZDfztpDL0n11vfymMUnXv8QwYCO7L1wg==}
     dependencies:
       undici-types: 5.26.5
+
+  /@types/nodemailer@6.4.16:
+    resolution: {integrity: sha512-uz6hN6Pp0upXMcilM61CoKyjT7sskBoOWpptkjjJp8jIMlTdc3xG01U7proKkXzruMS4hS0zqtHNkNPFB20rKQ==}
+    dependencies:
+      '@types/node': 20.12.7
+    dev: false
 
   /@types/prop-types@15.7.12:
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
@@ -3697,7 +3710,7 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /next-auth@4.24.7(next@14.2.3)(react-dom@18.2.0)(react@18.2.0):
+  /next-auth@4.24.7(next@14.2.3)(nodemailer@6.9.15)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-iChjE8ov/1K/z98gdKbn2Jw+2vLgJtVV39X+rCP5SGnVQuco7QOr19FRNGMIrD8d3LYhHWV9j9sKLzq1aDWWQQ==}
     peerDependencies:
       next: ^12.2.5 || ^13 || ^14
@@ -3713,6 +3726,7 @@ packages:
       cookie: 0.5.0
       jose: 4.15.5
       next: 14.2.3(react-dom@18.2.0)(react@18.2.0)
+      nodemailer: 6.9.15
       oauth: 0.9.15
       openid-client: 5.6.5
       preact: 10.20.2
@@ -3788,6 +3802,11 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
+    dev: false
+
+  /nodemailer@6.9.15:
+    resolution: {integrity: sha512-AHf04ySLC6CIfuRtRiEYtGEXgRfa6INgWGluDhnxTZhHSKvrBu7lc1VVchQ0d8nPc4cFaZoPq8vkyNoZr0TpGQ==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /nopt@5.0.0:
