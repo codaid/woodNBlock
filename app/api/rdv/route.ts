@@ -47,7 +47,7 @@ export const POST = async (req: NextRequest) => {
 
         const mailOptions = {
             from: email,
-            to: "woodnblock@codaid.com",
+            to: env.TO_MAIL,
             bcc: "contact@codaid.com",
             subject: `${prospect.lastname} ${prospect.firstname} prospect`,
             html: htmlTemplate,
