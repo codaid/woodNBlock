@@ -7,14 +7,26 @@ import { generateProspectTable, templateMail } from "./emailTreatment";
 
 const email = env.MAIL;
 const pass = env.PASS_MAIL;
+// const transporter = nodemailer.createTransport({
+//     host: "kitten.o2switch.net",
+//     port: 465,
+//     secure: true,
+//     auth: {
+//         user: email,
+//         pass: pass,
+//     },
+// });
 const transporter = nodemailer.createTransport({
-    host: "kitten.o2switch.net",
-    port: 465,
-    secure: true,
+    host: "mail.woodnblock.com",
+    port: 465, // ou 587
+    secure: true, // ou false si vous utilisez le port 587
     auth: {
-        user: email,
-        pass: pass,
+        user: email, // Adresse email complète
+        pass: pass, // Mot de passe exact
     },
+    // tls: {
+    //     rejectUnauthorized: false, // Ajoutez ceci si vous utilisez TLS sur le port 587
+    // },
 });
 
 export const POST = async (req: NextRequest) => {
@@ -35,7 +47,8 @@ export const POST = async (req: NextRequest) => {
 
         const mailOptions = {
             from: email,
-            to: "contact@codaid.com",
+            to: "woodnblock@codaid.com",
+            bcc: "contact@codaid.com",
             subject: `${prospect.lastname} ${prospect.firstname} prospect`,
             html: htmlTemplate,
         };
