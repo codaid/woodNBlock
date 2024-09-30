@@ -11,9 +11,12 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { LuPanelRightClose } from "react-icons/lu";
 import { twMerge } from "tailwind-merge";
-import { navlinks } from "./_component/navlinks";
 
-export const Sidebar = () => {
+type Props = {
+    navlinks: t_navlink[];
+};
+
+export const Sidebar = ({ navlinks }: Props) => {
     const [open, setOpen] = useState(isMobile() ? false : true);
 
     return (
@@ -29,7 +32,7 @@ export const Sidebar = () => {
                     >
                         <div className="flex-1 overflow-auto">
                             <SidebarHeader />
-                            <Navigation setOpen={setOpen} />
+                            <Navigation setOpen={setOpen} navlinks={navlinks} />
                         </div>
                     </motion.div>
                 )}
@@ -46,8 +49,10 @@ export const Sidebar = () => {
 
 export const Navigation = ({
     setOpen,
+    navlinks,
 }: {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    navlinks: t_navlink[];
 }) => {
     const pathname = usePathname();
 
@@ -66,12 +71,13 @@ export const Navigation = ({
                             "bg-color_light shadow-lg hover:text-slate-900 text-slate-900 dark:text-slate-900"
                     )}
                 >
-                    <link.icon
+                    {link.icon}
+                    {/* <link.icon
                         className={twMerge(
                             "h-4 w-4 flex-shrink-0",
                             isActive(link.href) && "text-color_primary"
                         )}
-                    />
+                    /> */}
                     <span>{link.label}</span>
                 </Link>
             ))}
@@ -110,7 +116,7 @@ const SidebarHeader = () => {
             <Image
                 src={Logo}
                 alt="Avatar"
-                className="size-28 shrink-0 rounded-lg bg-transparent object-cover object-top"
+                className="size-20 shrink-0 rounded-lg bg-transparent object-cover object-top"
             />
         </div>
     );

@@ -109,8 +109,8 @@ const ProspectsList = ({
                 </Table>
             </form>
 
-            <div className="flex flex-row gap-4 justify-end mt-5 items-center mr-5">
-                <div className="text-sm mt-4">
+            <div className="mr-5 mt-5 flex flex-row items-center justify-end gap-4">
+                <div className="mt-4 text-sm">
                     Affichage de {start} - {end} sur {totalProspects}
                 </div>
                 <Button
@@ -211,7 +211,7 @@ const ProspectRow = ({
                 <Button
                     disabled={isPending || prospect.status === "treat"}
                     onClick={() => mutate("treat")}
-                    className="w-38"
+                    className="w-38 bg-orange-950 text-white transition-all ease-in-out hover:bg-orange-900"
                 >
                     Marquer contacté{" "}
                     {isPending ? <Loader className="ml-4" /> : ""}{" "}

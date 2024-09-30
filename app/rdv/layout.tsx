@@ -1,5 +1,24 @@
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
-import { Sidebar } from "./_sidebar";
+import { LuMail, LuNewspaper, LuZap } from "react-icons/lu";
+import { Sidebar } from "../../src/components/layout/sidebar";
+
+const navlinks = [
+    {
+        href: "/rdv",
+        label: "Accueil",
+        icon: <LuZap className="size-4 shrink-0" />,
+    },
+    {
+        href: "/rdv/about",
+        label: "A propos",
+        icon: <LuNewspaper className="size-4 shrink-0" />,
+    },
+    {
+        href: "/rdv/contact",
+        label: "Contact",
+        icon: <LuMail className="size-4 shrink-0" />,
+    },
+];
 
 export default function RootLayout({
     children,
@@ -11,7 +30,7 @@ export default function RootLayout({
             <div className="fixed right-4 top-4 z-10 rounded-full">
                 <ThemeToggle />
             </div>
-            <Sidebar />
+            <Sidebar navlinks={navlinks} />
             <div className="flex-1 overflow-y-auto bg-background dark:bg-background lg:pl-2 lg:pt-2">
                 <div className="min-h-screen flex-1 overflow-y-auto border border-transparent bg-background lg:rounded-tl-xl lg:border-neutral-200">
                     {children}

@@ -122,9 +122,9 @@ const ProspectModal = ({ prospect, close }: Props) => {
     return (
         <div
             onClick={close}
-            className="fixed top-0 left-0 w-full h-full flex justify-center items-center"
+            className="fixed left-0 top-0 flex size-full items-center justify-center"
         >
-            <div className="w-fit h-fit bg-gray-700 rounded-lg p-12">
+            <div className="size-fit rounded-lg bg-color_primary p-12 px-6 py-10 text-white dark:bg-orange-950">
                 <Table>
                     <TableBody>
                         {tableHeadingModalProspect.map((heading, index) => (
