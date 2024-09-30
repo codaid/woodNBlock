@@ -1,8 +1,8 @@
 import { env } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
+import { schemaAddProspect } from "@/lib/schemaAddType";
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import { schemaInfoForm } from "../../rdv/_component/typeInfoForm";
 import { generateProspectTable, templateMail } from "./emailTreatment";
 
 const email = env.MAIL;
@@ -32,13 +32,11 @@ const transporter = nodemailer.createTransport({
 export const POST = async (req: NextRequest) => {
     try {
         const body = await req.json();
-        const prospect = schemaInfoForm.parse(body);
+        const prospect = schemaAddProspect.parse(body);
 
-        console.log("\n\n\nPasse\n\n\n");
         const newProspect = await prisma.prospect.create({
             data: prospect,
         });
-        console.log("\n\n\nPasse\n\n\n");
 
         const htmlTemplate = templateMail.replace(
             "BODY_MESSAGE",

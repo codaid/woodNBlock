@@ -45,8 +45,9 @@ export function UsersTable({
                                 Username
                             </TableHead>
                             <TableHead>Type</TableHead>
-                            <TableHead></TableHead>
-                            <TableHead></TableHead>
+                            <TableHead className="text-center">
+                                Actions
+                            </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -88,7 +89,7 @@ function UserRow({ user }: { user: t_userSelect }) {
             <TableCell className="hidden md:table-cell">{user.email}</TableCell>
             <TableCell>{user.username}</TableCell>
             <TableCell>{user.userType}</TableCell>
-            <TableCell>
+            <TableCell className="max-w-[100px]">
                 <Button
                     className="w-full"
                     size="sm"

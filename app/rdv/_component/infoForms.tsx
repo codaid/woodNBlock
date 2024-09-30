@@ -15,6 +15,8 @@ import {
 import { Heading } from "@/components/ui/heading";
 import { Input } from "@/components/ui/input";
 import Loader from "@/components/ui/loader";
+import { ourServices, rdvTypeSentence } from "@/constants/prospectConstant";
+import { schemaAddProspect, t_addProspect } from "@/lib/schemaAddType";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { useMutation } from "@tanstack/react-query";
@@ -22,14 +24,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { ourServices, rdvTypeSentence } from "./constante";
 import PicturesGallery from "./picturesGallery";
-import { schemaInfoForm, t_infoForm } from "./typeInfoForm";
 
 const InfoForms = () => {
     const router = useRouter();
-    const form = useForm<t_infoForm>({
-        resolver: zodResolver(schemaInfoForm),
+    const form = useForm<t_addProspect>({
+        resolver: zodResolver(schemaAddProspect),
         defaultValues: {
             firstname: "",
             lastname: "",
@@ -38,7 +38,7 @@ const InfoForms = () => {
     });
 
     const { mutate, isPending } = useMutation({
-        mutationFn: async (values: t_infoForm) => {
+        mutationFn: async (values: t_addProspect) => {
             try {
                 return await fetch(`/api/rdv`, {
                     method: "POST",
@@ -63,7 +63,7 @@ const InfoForms = () => {
         },
     });
 
-    const onSuccess = (values: t_infoForm) => {
+    const onSuccess = (values: t_addProspect) => {
         mutate(values);
     };
 
@@ -470,7 +470,7 @@ const InfoForms = () => {
                                                             <FormItem>
                                                                 <FormLabel>
                                                                     Numéro de
-                                                                    parcel
+                                                                    parcelle
                                                                     (optionnel)
                                                                 </FormLabel>
                                                                 <FormControl>
@@ -600,7 +600,7 @@ const InfoForms = () => {
                                                     <div className="space-y-1 leading-none">
                                                         <FormLabel>
                                                             J’ai une Entreprise
-                                                            individuel
+                                                            individuelle
                                                         </FormLabel>
                                                     </div>
                                                 </FormItem>

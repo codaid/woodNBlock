@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 const secret = env.NEXTAUTH_SECRET;
 
 /**
- * Update an ad
+ * Update an user
  * @param data: t_userUpdate
  * @returns
  */

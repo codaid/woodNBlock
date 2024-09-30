@@ -84,16 +84,22 @@ model Catalog {
   updatedAt     DateTime  @updatedAt
 }
 
+enum ProspectStatus {
+	idle
+	treat
+}
+
 model Prospect {
   id                          String   @id @default(cuid())
   firstname                   String
   lastname                    String
   phone                       String
   email                       String
-  address_street                      String?  // Adresse
-  address_postCode                    String?  // Code postal
-  address_city                        String?  // Ville
+  address_street              String?  // Adresse
+  address_postCode            String?  // Code postal
+  address_city                String?  // Ville
   rdvTypes                    String[] // Un tableau pour les types de rendez-vous (constructionProject, becomeReseller, becomeProvider)
+  status					  ProspectStatus	@default(idle)
 
   // Détails du projet de construction
   constructionProject_haveBuildingSite            Boolean  @default(false)
