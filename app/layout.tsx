@@ -1,3 +1,5 @@
+import { Sidebar } from "@/components/layout/sidebar";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
 import { SiteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
@@ -5,6 +7,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import { PropsWithChildren } from "react";
+import { LuMail, LuNewspaper, LuUser, LuZap } from "react-icons/lu";
 import { Providers } from "./Providers";
 import "./globals.css";
 
@@ -17,6 +20,29 @@ export const metadata: Metadata = {
         icon: "/favicon.ico",
     },
 };
+
+const navlinks = [
+    {
+        href: "/",
+        label: "Accueil",
+        icon: <LuZap className="size-4 shrink-0" />,
+    },
+    {
+        href: "/about",
+        label: "A propos",
+        icon: <LuNewspaper className="size-4 shrink-0" />,
+    },
+    {
+        href: "/contact",
+        label: "Contact",
+        icon: <LuMail className="size-4 shrink-0" />,
+    },
+    {
+        href: "/user",
+        label: "Espace utilisateur",
+        icon: <LuUser className="size-4 shrink-0" />,
+    },
+];
 
 export default function RootLayout({ children }: PropsWithChildren) {
     return (
@@ -53,7 +79,17 @@ export default function RootLayout({ children }: PropsWithChildren) {
                             ></iframe>
                         </noscript>
                         {/* <!-- End Google Tag Manager (noscript) --> */}
-                        {children}
+                        <div className="relative flex h-screen overflow-hidden bg-background antialiased dark:bg-background">
+                            <div className="fixed right-4 top-4 z-10 rounded-full">
+                                <ThemeToggle />
+                            </div>
+                            <Sidebar navlinks={navlinks} />
+                            <div className="flex-1 overflow-y-auto bg-background dark:bg-background lg:pl-2 lg:pt-2">
+                                <div className="min-h-screen flex-1 overflow-y-auto border border-transparent bg-background lg:rounded-tl-xl lg:border-neutral-200">
+                                    {children}
+                                </div>
+                            </div>
+                        </div>
                         <TailwindIndicator />
                     </Providers>
                 </body>

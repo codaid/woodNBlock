@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { LuPanelRightClose } from "react-icons/lu";
 import { twMerge } from "tailwind-merge";
+import { ThemeToggle } from "../theme/ThemeToggle";
 
 type Props = {
     navlinks: t_navlink[];
@@ -106,6 +107,15 @@ export const Navigation = ({
                     <span>{link.label}</span>
                 </Link>
             ))}
+            <Heading
+                as="p"
+                className="bg-gradient-to-r from-color_primary-foreground to-color_primary-light px-2 pt-10 text-sm md:text-sm lg:text-sm"
+            >
+                Theme
+            </Heading>
+            <Link href={"#"}>
+                <ThemeToggle />
+            </Link>
         </div>
     );
 };

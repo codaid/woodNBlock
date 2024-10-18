@@ -1,11 +1,11 @@
 "use client";
 
-import NotLogged from "@/components/layout/NotLogged";
 import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Loader from "@/components/ui/loader";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import HomeUser from "./homeUser";
 
 const UserPage = () => {
     const { isLoading, session } = useAuth();
@@ -13,7 +13,7 @@ const UserPage = () => {
 
     if (isLoading) return <Loader />;
 
-    if (!session) return <NotLogged />;
+    if (!session) return <HomeUser />;
 
     const user = session.user;
 

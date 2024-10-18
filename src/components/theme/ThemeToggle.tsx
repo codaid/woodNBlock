@@ -9,13 +9,17 @@ export function ThemeToggle() {
 
     return (
         <Button
-            variant="ghost"
-            size="icon"
+            variant="link"
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
         >
-            <LuSun className="size-6 dark:hidden" />
-            <LuMoon className="hidden size-5 dark:block" />
-            <span className="sr-only">Toggle theme</span>
+            <span className="flex items-center justify-start gap-2 text-slate-300 hover:bg-transparent hover:text-slate-50 dark:text-slate-300">
+                {theme === "dark" ? (
+                    <LuMoon className="size-5" />
+                ) : (
+                    <LuSun className="size-6" />
+                )}
+                <span>{theme === "dark" ? "sombre" : "claire"}</span>
+            </span>
         </Button>
     );
 }

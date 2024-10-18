@@ -4,17 +4,17 @@ import { Sidebar } from "../../src/components/layout/sidebar";
 
 const navlinks = [
     {
-        href: "/rdv",
+        href: "/",
         label: "Accueil",
         icon: <LuZap className="size-4 shrink-0" />,
     },
     {
-        href: "/rdv/about",
+        href: "/about",
         label: "A propos",
         icon: <LuNewspaper className="size-4 shrink-0" />,
     },
     {
-        href: "/rdv/contact",
+        href: "/contact",
         label: "Contact",
         icon: <LuMail className="size-4 shrink-0" />,
     },
