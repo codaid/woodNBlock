@@ -35,7 +35,7 @@ const LoggedButton = ({ user }: Props) => {
         <DropdownMenu>
             <AlertDialog>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="outline">
+                    <Button variant="outline" className="w-full">
                         <Avatar className="mr-2 size-6">
                             <AvatarFallback>{user.name?.[0]}</AvatarFallback>
                             {user.image && (

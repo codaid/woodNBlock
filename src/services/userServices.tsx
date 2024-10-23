@@ -71,3 +71,18 @@ export const updateUser = async (
         throw new Error("Une erreur est survenue");
     }
 };
+
+export const deleteUser = async (userId: string) => {
+    try {
+        return await fetch("/api/user", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userId }),
+        });
+    } catch (error) {
+        console.log(error);
+        throw new Error("Une erreur inconnu est survenue");
+    }
+};

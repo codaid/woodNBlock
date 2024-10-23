@@ -10,9 +10,10 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { t_userSelect, t_userUpdate } from "@/schemaType";
-import { updateUser } from "@/services/userServices";
+import { deleteUser, updateUser } from "@/services/userServices";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { LuTrash2 } from "react-icons/lu";
 import Loader from "../ui/loader";
 
@@ -72,9 +73,24 @@ export function UsersTable({
 
 function UserRow({ user }: { user: t_userSelect }) {
     const userId = user.id;
+    const router = useRouter();
     const { mutate, isPending } = useMutation({
         mutationFn: async (dataUpdate: t_userUpdate) =>
             await updateUser(dataUpdate),
+    });
+
+    const { mutate: mutateDelete, isPending: isPendingDelete } = useMutation({
+        mutationFn: async (id: string) => {
+            return await deleteUser(id);
+        },
+        onSuccess: async (res) => {
+            if (!res.ok) {
+                toast.error("Une erreur est survenue lors de la suppression");
+                return;
+            }
+            toast.success("Utilisateur supprimé");
+            router.refresh();
+        },
     });
 
     return (
@@ -114,12 +130,10 @@ function UserRow({ user }: { user: t_userSelect }) {
                     className="mt-2 w-full"
                     size="icon"
                     variant="destructive"
-                    formAction={() =>
-                        mutate({ id: userId, userType: "commercial" })
-                    }
+                    formAction={() => mutateDelete(user.id)}
                 >
                     <LuTrash2 />
-                    {isPending && <Loader className="ml-2" />}
+                    {isPendingDelete && <Loader className="ml-2" />}
                 </Button>
             </TableCell>
         </TableRow>

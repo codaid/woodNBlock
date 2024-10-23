@@ -2,6 +2,7 @@
 import Logo from "@/assets/logo.jpeg";
 import { Heading } from "@/components/ui/heading";
 import { socials } from "@/constants/socials";
+import AuthButton from "@/features/AuthButton";
 import { isMobile } from "@/lib/utils";
 import { t_navlink } from "@/type";
 import { AnimatePresence, motion } from "framer-motion";
@@ -34,6 +35,9 @@ export const Sidebar = ({ navlinks }: Props) => {
                         <div className="flex-1 overflow-auto">
                             <SidebarHeader />
                             <Navigation setOpen={setOpen} navlinks={navlinks} />
+                            <span className="self-end">
+                                <AuthButton />
+                            </span>
                         </div>
                     </motion.div>
                 )}

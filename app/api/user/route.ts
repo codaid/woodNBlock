@@ -2,7 +2,6 @@ import { authorizeCheck } from "@/lib/auth";
 import { env } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
 import { schemaUserUpdate } from "@/schemaType";
-import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 const secret = env.NEXTAUTH_SECRET;
@@ -81,18 +80,10 @@ export const PATCH = async (req: NextRequest) => {
 
 export async function DELETE(req: NextRequest) {
     try {
-        const token = await getToken({ req, secret });
-        if (!token) {
-            return NextResponse.json(
-                { message: "Not authenticated" },
-                { status: 401 }
-            );
+        const user = await authorizeCheck(req, ["admin"]);
+        if (user instanceof NextResponse) {
+            return user;
         }
-
-        const uid = token.sub;
-        const user = await prisma.user.findUnique({
-            where: { id: uid },
-        });
         if (user?.userType !== "admin") {
             return NextResponse.json(
                 { message: "Not allowed" },
@@ -105,7 +96,7 @@ export async function DELETE(req: NextRequest) {
 
         if (!userId)
             return NextResponse.json(
-                { message: "Missing quizId" },
+                { message: "Missing userId" },
                 { status: 404 }
             );
 
