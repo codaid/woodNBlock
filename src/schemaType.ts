@@ -49,17 +49,32 @@ export const schemaProspect = z.object({
     phone: z.string().regex(/^\d+$/, "Numéro de téléphone invalide"),
     email: z.string().email({ message: "Format de mail non valide" }),
     status: z.enum(["idle", "treat"]).default("idle"),
-    address_street: z.string().optional(),
-    address_postCode: z.string().optional(),
-    address_city: z.string().optional(),
+    address_street: z.preprocess(
+        (value) => (value === null ? undefined : value),
+        z.string().optional()
+    ),
+    address_postCode: z.preprocess(
+        (value) => (value === null ? undefined : value),
+        z.string().optional()
+    ),
+    address_city: z.preprocess(
+        (value) => (value === null ? undefined : value),
+        z.string().optional()
+    ),
     rdvTypes: z
         .array(
             z.enum(["constructionProject", "becomeReseller", "becomeProvider"])
         )
         .nonempty("Vous devez sélectionner au moins 1 option"),
     constructionProject_haveBuildingSite: z.boolean().default(false).optional(),
-    constructionProject_buildingPostCode: z.string().optional(),
-    constructionProject_parcelNumber: z.string().optional(),
+    constructionProject_buildingPostCode: z.preprocess(
+        (value) => (value === null ? undefined : value),
+        z.string().optional()
+    ),
+    constructionProject_parcelNumber: z.preprocess(
+        (value) => (value === null ? undefined : value),
+        z.string().optional()
+    ),
     constructionProject_havePlan: z.boolean().default(false).optional(),
     constructionProject_haveIdeaProject: z.boolean().default(false).optional(),
     constructionProject_wantSeeTemplate: z.boolean().default(false).optional(),
