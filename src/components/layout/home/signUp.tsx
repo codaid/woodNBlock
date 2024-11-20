@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Loader from "@/components/ui/loader";
-import { t_addUser } from "@/lib/schemaAddType";
-import { schemaAddUser } from "@/schemaType";
+import { schemaAddUser, t_addUser } from "@/lib/schemaAddType";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "next-auth/react";

@@ -10,6 +10,7 @@ export const env = createEnv({
         PASS_MAIL: z.string(),
         MAIL: z.string(),
         TO_MAIL: z.string(),
+        MAIL_HOST: z.string(),
     },
     client: {
         // NEXT_PUBLIC_PUBLISHABLE_KEY: z.string().min(1),

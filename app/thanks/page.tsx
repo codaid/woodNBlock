@@ -32,7 +32,7 @@ export default function Component() {
                             plus brefs délais.
                         </p>
                         <Link
-                            href="/rdv"
+                            href="/"
                             className="rounded-md bg-color_primary px-6 py-2 text-white transition-colors duration-300 hover:bg-color_primary-light"
                         >
                             Retourner a la page d&apos;accueil

@@ -23,7 +23,7 @@ const PicturesGallery = ({ images, reverse = false }: Props) => {
     };
 
     return (
-        <div className="my-10 grid grid-cols-2 gap-10 md:grid-cols-3">
+        <div className="my-10 grid grid-cols-2 justify-items-center gap-10 md:grid-cols-3">
             {images.map((image, index) => (
                 <motion.div
                     key={image}
@@ -35,7 +35,7 @@ const PicturesGallery = ({ images, reverse = false }: Props) => {
                     custom={index}
                     className={
                         images.length === 3 && index === 2
-                            ? "col-span-2 md:col-span-1 md:col-start-2"
+                            ? "col-span-2 md:col-span-1"
                             : ""
                     }
                 >

@@ -1,7 +1,9 @@
+import { env } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
-import { schemaAddUser } from "@/schemaType";
+import { schemaAddUser } from "@/lib/schemaAddType";
 import { hash } from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
+import { sendMail } from "../../utils/sendMail";
 
 export const POST = async (req: NextRequest) => {
     try {
@@ -47,6 +49,13 @@ export const POST = async (req: NextRequest) => {
         });
 
         const { password: newUserPassword, ...rest } = newUser;
+
+        const emailSended = await sendMail(
+            "Nouveau compte créé",
+            `${newUser.lastname} ${newUser.firstname} s'est inscrit.`,
+            env.TO_MAIL
+        );
+        // TODO: Write in error log il message not send
 
         return NextResponse.json(
             { user: rest, message: "User created successfully" },

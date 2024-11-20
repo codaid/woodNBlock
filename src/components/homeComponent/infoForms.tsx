@@ -55,7 +55,7 @@ const InfoForms = () => {
                     "Erreur lors de l'envoie du formulaire. Veuillez réessayer"
                 );
             toast.success("Informations transmises.");
-            router.push("/rdv/thanks");
+            router.push("/thanks");
         },
         onError: (error) => {
             console.log(error);
