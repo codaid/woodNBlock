@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import Authentication from "./authentication";
 
 const HeroSection = () => {
@@ -56,7 +57,11 @@ const HeroSection = () => {
                                 </p>
                             </div>
                             <div className="mt-8 flex justify-center gap-3">
-                                <Button size={"lg"}>Envoyer un mail</Button>
+                                <Button asChild size={"lg"}>
+                                    <Link href={"/contact"}>
+                                        Envoyer un mail
+                                    </Link>
+                                </Button>
                             </div>
                         </div>
                     </div>

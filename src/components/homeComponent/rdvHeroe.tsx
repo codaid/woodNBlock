@@ -53,9 +53,14 @@ const Hero = () => {
                     </div>
                     <h3 className="text-muted-foreground">
                         <Balancer>
-                            Votre maison n&apos;est plus qu&apos;a un clic !
+                            STOP AUX CONSTRUCTIONS HORS DE PRIX !
                         </Balancer>
                     </h3>
+                    <p className="py-4">
+                        Découvrez la nouvelle façon de construire en bois
+                        massif. Nous allions solidité, esthétique et confort, à
+                        des tarifs compétitifs pour tous types de projets.
+                    </p>
                     <div className="not-prose my-8 h-96 w-full overflow-hidden rounded-lg border md:h-[480px] md:rounded-xl">
                         <Image
                             className="size-full object-cover object-bottom"

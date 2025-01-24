@@ -6,6 +6,7 @@ export type t_userSelect = z.infer<typeof schemaSelectUser>;
 export type t_catalog = z.infer<typeof schemaCatalog>;
 export type t_userUpdate = z.infer<typeof schemaUserUpdate>;
 export type t_prospect = z.infer<typeof schemaProspect>;
+export type t_contact = z.infer<typeof schemaContact>;
 
 export const schemaUserData = z.object({
     id: z.string(),
@@ -143,6 +144,14 @@ export const schemaProspect = z.object({
 
 //     providerServices: z.array(z.enum(ourServices)).optional().nullable(),
 // });
+
+export const schemaContact = z.object({
+    name: z.string(),
+    phone: z.string().optional(),
+    email: z.string(),
+    object: z.string().min(1),
+    message: z.string().min(10),
+});
 
 export const schemaProspects = z.array(schemaProspect);
 export const schemaSelectUsers = z.array(schemaSelectUser);

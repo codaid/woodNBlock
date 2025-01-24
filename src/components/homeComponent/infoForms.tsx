@@ -121,7 +121,7 @@ const InfoForms = () => {
                                 }
                             >
                                 {rdvTypeSentence.map((item, index) => (
-                                    <Bounce>
+                                    <Bounce key={`${index}_${item.id}`}>
                                         <FormControl>
                                             <div className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                                                 <Checkbox

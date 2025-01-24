@@ -1,142 +1,207 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import Loader from "@/components/ui/loader";
+import { Textarea } from "@/components/ui/textarea";
+import { schemaContact, t_contact } from "@/schemaType";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { LuSend } from "react-icons/lu";
-import { z } from "zod";
-
-const defaultFormState = {
-    name: {
-        value: "",
-        error: "",
-    },
-    email: {
-        value: "",
-        error: "",
-    },
-    message: {
-        value: "",
-        error: "",
-    },
-};
-
-const schemaContact = z.object({
-    name: z.string(),
-    phone: z.string().optional().nullable(),
-    email: z.string(),
-    object: z.string().min(1),
-    message: z.string().min(10),
-});
 
 export const Contact = () => {
-    const [formData, setFormData] = useState(defaultFormState);
+    const router = useRouter();
 
-    const form = useForm<z.infer<typeof schemaContact>>({
+    const form = useForm<t_contact>({
         resolver: zodResolver(schemaContact),
         defaultValues: {
             name: "",
-            phone: null,
+            phone: "",
             email: "",
             object: "",
             message: "",
         },
     });
 
-    const handleSubmit = (e: any) => {
-        e.preventDefault();
-        // Write your submit logic here
-        console.log(formData);
+    const { mutate, isPending } = useMutation({
+        mutationFn: async (contact: t_contact) => {
+            try {
+                return await fetch("/api/contact", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(contact),
+                });
+            } catch (error) {
+                console.log(error);
+                toast.error("Une erreur est survenue");
+            }
+        },
+        onSuccess: async (res) => {
+            console.log(res);
+            if (res && res.ok) {
+                router.push("/thanks");
+            } else {
+                toast.error("Une erreur est survenue lors de l'envoie.");
+            }
+        },
+    });
+
+    const onSuccess = (values: t_contact) => {
+        mutate(values);
     };
+
+    const onError = (error: any) => {
+        toast.error(error.message);
+        console.log(error);
+    };
+
     return (
         <Form {...form}>
-            <form className="form" onSubmit={handleSubmit}>
+            <form
+                className="form"
+                onSubmit={form.handleSubmit(onSuccess, onError)}
+            >
                 <div className="flex flex-col justify-between gap-5 md:flex-row">
-                    <input
-                        type="text"
-                        placeholder="Nom"
-                        className="w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
-                        value={formData.name.value}
-                        onChange={(e) => {
-                            setFormData({
-                                ...formData,
-                                name: {
-                                    value: e.target.value,
-                                    error: "",
-                                },
-                            });
-                        }}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Télephone"
-                        className="w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
-                        value={formData.name.value}
-                        onChange={(e) => {
-                            setFormData({
-                                ...formData,
-                                name: {
-                                    value: e.target.value,
-                                    error: "",
-                                },
-                            });
-                        }}
-                    />
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        className="w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
-                        value={formData.email.value}
-                        onChange={(e) => {
-                            setFormData({
-                                ...formData,
-                                email: {
-                                    value: e.target.value,
-                                    error: "",
-                                },
-                            });
-                        }}
-                    />
+                    <div className="grid w-full grid-cols-2 gap-3 sm:grid-cols-3">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem className="w-full">
+                                    <FormControl
+                                        className={
+                                            form.formState.errors.name
+                                                ? "border-destructive"
+                                                : ""
+                                        }
+                                    >
+                                        <Input
+                                            placeholder="Nom complet"
+                                            className="w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="phone"
+                            render={({ field }) => (
+                                <FormItem className="w-full">
+                                    <FormControl
+                                        className={
+                                            form.formState.errors.phone
+                                                ? "border-destructive"
+                                                : ""
+                                        }
+                                    >
+                                        <Input
+                                            placeholder="0692 00 00 00"
+                                            className="w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem className="w-full max-sm:col-span-2">
+                                    <FormControl
+                                        className={
+                                            form.formState.errors.phone
+                                                ? "border-destructive"
+                                                : ""
+                                        }
+                                    >
+                                        <Input
+                                            placeholder="mail@mail.com"
+                                            className="w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
-                <div className="pt-4">
-                    <input
-                        type="text"
-                        placeholder="Object"
-                        className="w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
-                        value={formData.email.value}
-                        onChange={(e) => {
-                            setFormData({
-                                ...formData,
-                                email: {
-                                    value: e.target.value,
-                                    error: "",
-                                },
-                            });
-                        }}
-                    />
-                    <textarea
-                        placeholder="Votre message"
-                        rows={10}
-                        className="mt-4 w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
-                        value={formData.message.value}
-                        onChange={(e) => {
-                            setFormData({
-                                ...formData,
-                                message: {
-                                    value: e.target.value,
-                                    error: "",
-                                },
-                            });
-                        }}
-                    />
-                </div>
+
+                <FormField
+                    control={form.control}
+                    name="object"
+                    render={({ field }) => (
+                        <FormItem className="mt-4 w-full">
+                            <FormControl
+                                className={
+                                    form.formState.errors.phone
+                                        ? "border-destructive"
+                                        : ""
+                                }
+                            >
+                                <Input
+                                    placeholder="Object"
+                                    className="w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                        <FormItem className="mt-4 w-full">
+                            <FormControl
+                                className={
+                                    form.formState.errors.phone
+                                        ? "border-destructive"
+                                        : ""
+                                }
+                            >
+                                <Textarea
+                                    rows={10}
+                                    placeholder="Votre message"
+                                    className="w-full rounded-md border bg-neutral-100 p-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:bg-slate-700"
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
                 <Button
                     variant={"ringHover"}
                     className="mt-4 flex w-full items-center justify-center rounded-md bg-color_primary p-2 font-bold text-color_light hover:bg-color_primary hover:ring-color_primary"
                     type="submit"
+                    disabled={isPending}
                 >
-                    Envoyer <LuSend className="ml-2" />
+                    Envoyer
+                    {isPending ? (
+                        <Loader className="ml-2" />
+                    ) : (
+                        <LuSend className="ml-2" />
+                    )}
                 </Button>
             </form>
         </Form>
